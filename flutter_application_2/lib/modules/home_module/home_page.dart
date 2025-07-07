@@ -1,7 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/live_strem/live_detail_page.dart';
+import 'package:flutter_application_2/modules/live_module/live_detail_page.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  final List<String> tabs = const [
+    'NEARBY',
+    'POPULAR',
+    'MULTI GUEST',
+    'PK',
+    'SUPER STAR',
+  ];
   final List<String> subTabs = const [
     'All',
     'Education Guest',
@@ -10,12 +24,34 @@ class HomePage extends StatelessWidget {
     'Super Star',
   ];
 
-  const HomePage({super.key});
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: tabs.length, vsync: this, initialIndex: 1);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: TabBar(
+          controller: _tabController,
+          isScrollable: true,
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.white70,
+          indicatorColor: Colors.white,
+          tabs: tabs.map((e) => Tab(text: e)).toList(),
+        ),
+        backgroundColor: Colors.pink,
+        actions: [IconButton(icon: const Icon(Icons.search), onPressed: () {})],
+      ),
       body: Column(
         children: [
           // 二级Tab

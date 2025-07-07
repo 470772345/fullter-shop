@@ -22,63 +22,25 @@ class LiveHomePage extends StatefulWidget {
   State<LiveHomePage> createState() => _LiveHomePageState();
 }
 
-class _LiveHomePageState extends State<LiveHomePage>
-    with SingleTickerProviderStateMixin {
+class _LiveHomePageState extends State<LiveHomePage> {
   int _bottomIndex = 0;
-  late TabController _tabController;
   late List<Widget> _pages;
-
-  final List<String> tabs = [
-    'NEARBY',
-    'POPULAR',
-    'MULTI GUEST',
-    'PK',
-    'SUPER STAR',
-  ];
-  final List<String> subTabs = [
-    'All',
-    'Education Guest',
-    'Game',
-    'Fun Entertainment',
-    'Super Star',
-  ];
-
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(
-      length: tabs.length,
-      vsync: this,
-      initialIndex: 1,
-    );
     _pages = [
-      // 首页内容
-      HomePage(), 
-      // 其他tab可用占位Widget
-      Center(child: Text('Live')), // 第二个tab
-      Center(child: Text('Mic')),  // 第三个tab
-      MyPage(),                   // 第四个tab：Me
+      HomePage(),
+      Center(child: Text('Live')),
+      Center(child: Text('Mic')),
+      MyPage(),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _bottomIndex == 0
-          ? AppBar(
-              title: TabBar(
-                controller: _tabController,
-                isScrollable: true,
-                labelColor: Colors.white,
-                unselectedLabelColor: Colors.white70,
-                indicatorColor: Colors.white,
-                tabs: tabs.map((e) => Tab(text: e)).toList(),
-              ),
-              backgroundColor: Colors.pink,
-              actions: [IconButton(icon: const Icon(Icons.search), onPressed: () {})],
-            )
-          : null,
+      // AppBar 交由各自页面管理，这里不再处理
       body: _pages[_bottomIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _bottomIndex,
