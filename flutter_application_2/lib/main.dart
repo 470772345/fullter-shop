@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/live_strem/live_detail_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -102,12 +103,37 @@ class _LiveHomePageState extends State<LiveHomePage>
               ),
               itemCount: 16,
               itemBuilder: (context, index) {
-                return LiveCard(
-                  imageUrl: 'https://picsum.photos/seed/$index/400/300',
-                  title: index % 2 == 0 ? 'Lets Join' : 'Bring music to Live',
-                  tag: index % 2 == 0 ? 'Super Star' : 'LIVE HOUSE',
-                  viewers: 384,
-                );
+                final imageUrl = 'https://picsum.photos/seed/$index/400/300';
+                final title = index % 2 == 0 ? 'Lets Join' : 'Bring music to Live';
+                final tag = index % 2 == 0 ? 'Super Star' : 'LIVE HOUSE';
+                if (tag == 'LIVE HOUSE') {
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LiveDetailPage(
+                            title: title,
+                            imageUrl: imageUrl,
+                          ),
+                        ),
+                      );
+                    },
+                    child: LiveCard(
+                      imageUrl: imageUrl,
+                      title: title,
+                      tag: tag,
+                      viewers: 384,
+                    ),
+                  );
+                } else {
+                  return LiveCard(
+                    imageUrl: imageUrl,
+                    title: title,
+                    tag: tag,
+                    viewers: 384,
+                  );
+                }
               },
             ),
           ),
