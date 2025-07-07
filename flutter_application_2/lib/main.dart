@@ -103,7 +103,7 @@ class _LiveHomePageState extends State<LiveHomePage>
               itemCount: 16,
               itemBuilder: (context, index) {
                 return LiveCard(
-                  imageUrl: 'https://images.unsplash.com/photo-15${index}0',
+                  imageUrl: 'https://picsum.photos/seed/$index/400/300',
                   title: index % 2 == 0 ? 'Lets Join' : 'Bring music to Live',
                   tag: index % 2 == 0 ? 'Super Star' : 'LIVE HOUSE',
                   viewers: 384,
