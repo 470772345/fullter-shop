@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/live_strem/live_detail_page.dart';
+import 'package:flutter_application_2/modules/user_module/me.dart';
 
 void main() => runApp(const MyApp());
 
@@ -25,6 +26,7 @@ class _LiveHomePageState extends State<LiveHomePage>
     with SingleTickerProviderStateMixin {
   int _bottomIndex = 0;
   late TabController _tabController;
+  late List<Widget> _pages;
 
   final List<String> tabs = [
     'NEARBY',
@@ -41,6 +43,7 @@ class _LiveHomePageState extends State<LiveHomePage>
     'Super Star',
   ];
 
+
   @override
   void initState() {
     super.initState();
@@ -49,24 +52,9 @@ class _LiveHomePageState extends State<LiveHomePage>
       vsync: this,
       initialIndex: 1,
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: TabBar(
-          controller: _tabController,
-          isScrollable: true,
-          labelColor: Colors.white,
-          unselectedLabelColor: Colors.white70,
-          indicatorColor: Colors.white,
-          tabs: tabs.map((e) => Tab(text: e)).toList(),
-        ),
-        backgroundColor: Colors.pink,
-        actions: [IconButton(icon: const Icon(Icons.search), onPressed: () {})],
-      ),
-      body: Column(
+    _pages = [
+      // 首页内容
+      Column(
         children: [
           // 二级Tab
           Container(
@@ -139,6 +127,31 @@ class _LiveHomePageState extends State<LiveHomePage>
           ),
         ],
       ),
+      // 其他tab可用占位Widget
+      Center(child: Text('Live')), // 第二个tab
+      Center(child: Text('Mic')),  // 第三个tab
+      MyPage(),                   // 第四个tab：Me
+    ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: _bottomIndex == 0
+          ? AppBar(
+              title: TabBar(
+                controller: _tabController,
+                isScrollable: true,
+                labelColor: Colors.white,
+                unselectedLabelColor: Colors.white70,
+                indicatorColor: Colors.white,
+                tabs: tabs.map((e) => Tab(text: e)).toList(),
+              ),
+              backgroundColor: Colors.pink,
+              actions: [IconButton(icon: const Icon(Icons.search), onPressed: () {})],
+            )
+          : null,
+      body: _pages[_bottomIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _bottomIndex,
         onTap: (i) => setState(() => _bottomIndex = i),
