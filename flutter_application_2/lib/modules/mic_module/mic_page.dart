@@ -25,7 +25,7 @@ class MicPageState extends State<MicPage> {
   final Set<int> selectedIndexes = {0, 1, 3};
 
   static const double kBottomNavBarHeight = 70.0; // Flutter默认BottomNavigationBar高度
-  static const double kPlayerHeight = 80.0;
+  static const double kPlayerHeight = 100.0;
   double _sliderValue = 2.24; 
 
   @override
@@ -150,23 +150,22 @@ class MicPageState extends State<MicPage> {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
+                          Slider(
+                            value: _sliderValue,
+                            min: 0,
+                            max: 3.38,
+                            onChanged: (v) {
+                              setState(() {
+                                _sliderValue = v;
+                              });
+                            },
+                            activeColor: Colors.white,
+                            inactiveColor: Colors.white24,
+                          ),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("2:24", style: TextStyle(color: Colors.white70, fontSize: 10)),
-                              Expanded(
-                                child: Slider(
-                                  value: _sliderValue,
-                                  min: 0,
-                                  max: 3.38,
-                                  onChanged: (v) {
-                                    setState(() {
-                                      _sliderValue = v;
-                                    });
-                                  },
-                                  activeColor: Colors.white,
-                                  inactiveColor: Colors.white24,
-                                ),
-                              ),
                               Text("-1:14", style: TextStyle(color: Colors.white70, fontSize: 10)),
                             ],
                           ),
