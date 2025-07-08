@@ -88,16 +88,19 @@ class MicPageState extends State<MicPage> {
                   itemBuilder: (context, index) {
                     final song = songs[index];
                     return ListTile(
-                      leading: Image.network(
-                        "https://upload.wikimedia.org/wikipedia/en/9/9b/The_Weeknd_-_Starboy.png",
-                        width: 48,
-                        height: 48,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) => Container(
+                      leading: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.network(
+                          "https://picsum.photos/seed/$index/400/300",
                           width: 48,
                           height: 48,
-                          color: Colors.grey[200],
-                          child: Icon(Icons.broken_image, color: Colors.grey),
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) => Container(
+                            width: 48,
+                            height: 48,
+                            color: Colors.grey[200],
+                            child: Icon(Icons.broken_image, color: Colors.grey),
+                          ),
                         ),
                       ),
                       title: Text(song["title"], style: TextStyle(fontWeight: FontWeight.bold)),
