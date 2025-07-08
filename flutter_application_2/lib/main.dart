@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2/modules/mic_module/mic_page.dart';
 import 'package:flutter_application_2/modules/user_module/me_page.dart';
 import 'package:flutter_application_2/modules/home_module/home_page.dart';
+import 'commom/styles/theme.dart';
 
 void main() => runApp(const MyApp());
 
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Live App Demo',
-      theme: ThemeData(primarySwatch: Colors.pink),
+      theme: appTheme,
       home: LiveHomePage(),
     );
   }
