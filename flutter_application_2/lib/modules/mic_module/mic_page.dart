@@ -41,34 +41,41 @@ class MicPageState extends State<MicPage> {
           Column(
             children: [
               // 渐变AppBar
-              SafeArea(
-                top: true,
-                bottom: false,
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color(0xFFEA5C8B), Color(0xFFF9A14A)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xFFEA5C8B), Color(0xFFF9A14A)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                  child: Row(
-                    children: [
-                      Icon(Icons.arrow_back, color: Colors.white),
-                      SizedBox(width: 16),
-                      Expanded(
-                        child: Text(
-                          "Hollywood (8)",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                ),
+                child: SafeArea(
+                  top: true,
+                  bottom: false,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.arrow_back, color: Colors.white),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        SizedBox(width: 16),
+                        Expanded(
+                          child: Text(
+                            "Hollywood (8)",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      Icon(Icons.search, color: Colors.white),
-                    ],
+                        Icon(Icons.search, color: Colors.white),
+                      ],
+                    ),
                   ),
                 ),
               ),
