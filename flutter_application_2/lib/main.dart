@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/modules/mic_module/mic_page.dart';
 import 'package:flutter_application_2/modules/user_module/me_page.dart';
 import 'package:flutter_application_2/modules/home_module/home_page.dart';
 
@@ -32,7 +33,7 @@ class _LiveHomePageState extends State<LiveHomePage> {
     _pages = [
       HomePage(),
       Center(child: Text('Live')),
-      Center(child: Text('Mic')),
+      MicPage(),
       MyPage(),
     ];
   }
