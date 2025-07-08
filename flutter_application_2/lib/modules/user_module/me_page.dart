@@ -18,10 +18,6 @@ class MyPage extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(24),
-                bottomRight: Radius.circular(24),
-              ),
             ),
             padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
             child: Row(

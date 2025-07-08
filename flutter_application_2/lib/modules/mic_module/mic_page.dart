@@ -53,7 +53,7 @@ class MicPageState extends State<MicPage> {
                   top: true,
                   bottom: false,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    padding: EdgeInsets.symmetric(horizontal: 6, vertical: 3),
                     child: Row(
                       children: [
                         IconButton(
