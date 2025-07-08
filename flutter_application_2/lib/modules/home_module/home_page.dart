@@ -64,15 +64,25 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               itemCount: subTabs.length,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 8,
-                  ),
-                  child: Chip(
-                    label: Text(subTabs[index]),
-                    backgroundColor: index == 0
-                        ? AppColors.primary.withAlpha((0.15 * 255).toInt())
-                        : Theme.of(context).dividerColor,
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                  child: Container(
+                    height: 32,
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: index == 0
+                          ? AppColors.primary.withAlpha((0.15 * 255).toInt())
+                          : Theme.of(context).dividerColor,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      subTabs[index],
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 );
               },
