@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           controller: _tabController,
           isScrollable: true,
           labelColor: AppColors.textInverse,
-          unselectedLabelColor: AppColors.textInverse.withOpacity(0.7),
+          unselectedLabelColor: AppColors.textInverse.withAlpha((0.7 * 255).toInt()),
           indicatorColor: AppColors.textInverse,
           tabs: tabs.map((e) => Tab(text: e)).toList(),
         ),
@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   child: Chip(
                     label: Text(subTabs[index]),
                     backgroundColor: index == 0
-                        ? AppColors.primary.withOpacity(0.15)
+                        ? AppColors.primary.withAlpha((0.15 * 255).toInt())
                         : AppColors.divider,
                   ),
                 );

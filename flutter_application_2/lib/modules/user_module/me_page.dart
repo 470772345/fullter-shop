@@ -27,9 +27,9 @@ class MyPage extends StatelessWidget {
                   child: TextField(
                     decoration: InputDecoration(
                       hintText: 'Search username/ID',
-                      hintStyle: TextStyle(color: AppColors.textInverse.withOpacity(0.7)),
+                      hintStyle: TextStyle(color: AppColors.textInverse.withAlpha((0.7 * 255).toInt())),
                       filled: true,
-                      fillColor: AppColors.textInverse.withOpacity(0.2),
+                      fillColor: AppColors.textInverse.withAlpha((0.2 * 255).toInt()),
                       prefixIcon: Icon(Icons.search, color: AppColors.textInverse),
                       contentPadding: const EdgeInsets.symmetric(vertical: 0),
                       border: OutlineInputBorder(

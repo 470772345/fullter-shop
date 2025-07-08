@@ -88,8 +88,8 @@ class LiveDetailPage extends StatelessWidget {
                             children: [
                               CircleAvatar(
                                 backgroundColor: AppColors.card,
-                                child: Text('YL', style: TextStyle(color: AppColors.textPrimary)),
                                 radius: 24,
+                                child: Text('YL', style: TextStyle(color: AppColors.textPrimary)),
                               ),
                               const SizedBox(height: 4),
                               const Icon(Icons.monetization_on, color: AppColors.liveGold, size: 16),
@@ -101,8 +101,8 @@ class LiveDetailPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               CircleAvatar(
-                                backgroundImage: NetworkImage('https://randomuser.me/api/portraits/women/2.jpg'),
                                 radius: 24,
+                                backgroundImage: NetworkImage('https://randomuser.me/api/portraits/women/2.jpg'),
                               ),
                               const SizedBox(height: 4),
                               Row(
@@ -121,12 +121,12 @@ class LiveDetailPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               CircleAvatar(
-                                backgroundColor: AppColors.card.withOpacity(0.2),
-                                child: const Icon(Icons.add, color: AppColors.textInverse),
+                                backgroundColor: AppColors.card.withAlpha((0.2 * 255).toInt()),
                                 radius: 24,
+                                child: const Icon(Icons.add, color: AppColors.textInverse),
                               ),
                               const SizedBox(height: 4),
-                              Text('${index + 1}', style: TextStyle(color: AppColors.textInverse.withOpacity(0.7), fontSize: 12)),
+                              Text('${index + 1}', style: TextStyle(color: AppColors.textInverse.withAlpha((0.7 * 255).toInt()), fontSize: 12)),
                             ],
                           );
                         }
@@ -153,8 +153,8 @@ class LiveDetailPage extends StatelessWidget {
                           SizedBox(width: 16),
                           CircleAvatar(
                             backgroundColor: AppColors.liveRed,
-                            child: Icon(Icons.call_end, color: AppColors.textInverse),
                             radius: 24,
+                            child: Icon(Icons.call_end, color: AppColors.textInverse),
                           ),
                         ],
                       ),

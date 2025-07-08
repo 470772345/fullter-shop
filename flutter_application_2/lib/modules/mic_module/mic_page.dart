@@ -171,13 +171,13 @@ class MicPageState extends State<MicPage> {
                               });
                             },
                             activeColor: AppColors.textInverse,
-                            inactiveColor: AppColors.textInverse.withOpacity(0.24),
+                            inactiveColor: AppColors.textInverse.withAlpha((0.24 * 255).toInt()),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("2:24", style: TextStyle(color: AppColors.textInverse.withOpacity(0.7), fontSize: 10, fontWeight: FontWeight.w400)),
-                              Text("-1:14", style: TextStyle(color: AppColors.textInverse.withOpacity(0.7), fontSize: 10, fontWeight: FontWeight.w400)),
+                              Text("2:24", style: TextStyle(color: AppColors.textInverse.withAlpha((0.7 * 255).toInt()), fontSize: 10, fontWeight: FontWeight.w400)),
+                              Text("-1:14", style: TextStyle(color: AppColors.textInverse.withAlpha((0.7 * 255).toInt()), fontSize: 10, fontWeight: FontWeight.w400)),
                             ],
                           ),
                         ],
