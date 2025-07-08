@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/modules/live_module/live_detail_page.dart';
+import 'package:flutter_application_2/commom/styles/colors.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -39,24 +40,24 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         title: TabBar(
           controller: _tabController,
           isScrollable: true,
-          labelColor: Colors.white,
-          unselectedLabelColor: Colors.white70,
-          indicatorColor: Colors.white,
+          labelColor: AppColors.textInverse,
+          unselectedLabelColor: AppColors.textInverse.withOpacity(0.7),
+          indicatorColor: AppColors.textInverse,
           tabs: tabs.map((e) => Tab(text: e)).toList(),
         ),
-        backgroundColor: Colors.pink,
+        backgroundColor: AppColors.primary,
         actions: [IconButton(icon: const Icon(Icons.search), onPressed: () {})],
       ),
       body: Column(
         children: [
           // 二级Tab
           Container(
-            color: Colors.white,
+            color: AppColors.background,
             height: 48,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -70,8 +71,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   child: Chip(
                     label: Text(subTabs[index]),
                     backgroundColor: index == 0
-                        ? Colors.pink[100]
-                        : Colors.grey[200],
+                        ? AppColors.primary.withOpacity(0.15)
+                        : AppColors.divider,
                   ),
                 );
               },
@@ -154,7 +155,7 @@ class LiveCard extends StatelessWidget {
             child: Image.network(
               imageUrl,
               fit: BoxFit.cover,
-              errorBuilder: (c, e, s) => Container(color: Colors.grey[300]),
+              errorBuilder: (c, e, s) => Container(color: AppColors.divider),
             ),
           ),
           // 顶部标签
@@ -164,12 +165,12 @@ class LiveCard extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               decoration: BoxDecoration(
-                color: tag == 'Super Star' ? Colors.pink : Colors.blue,
+                color: tag == 'Super Star' ? AppColors.primary : AppColors.accent,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
                 tag,
-                style: const TextStyle(color: Colors.white, fontSize: 12),
+                style: const TextStyle(color: AppColors.textInverse, fontSize: 12),
               ),
             ),
           ),
@@ -185,7 +186,7 @@ class LiveCard extends StatelessWidget {
               ),
               child: Text(
                 '$viewers',
-                style: const TextStyle(color: Colors.white, fontSize: 12),
+                style: const TextStyle(color: AppColors.textInverse, fontSize: 12),
               ),
             ),
           ),
@@ -196,7 +197,7 @@ class LiveCard extends StatelessWidget {
             child: Text(
               title,
               style: const TextStyle(
-                color: Colors.white,
+                color: AppColors.textInverse,
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
                 shadows: [Shadow(color: Colors.black54, blurRadius: 4)],

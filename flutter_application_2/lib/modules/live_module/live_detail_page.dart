@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/commom/styles/colors.dart';
 
 class LiveDetailPage extends StatelessWidget {
   final String title;
@@ -22,12 +23,12 @@ class LiveDetailPage extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: const TextStyle(fontSize: 16)),
+                Text(title, style: const TextStyle(fontSize: 16, color: AppColors.textInverse)),
                 Row(
                   children: const [
-                    Icon(Icons.remove_red_eye, size: 14, color: Colors.white70),
+                    Icon(Icons.remove_red_eye, size: 14, color: AppColors.textInverse),
                     SizedBox(width: 2),
-                    Text('129', style: TextStyle(fontSize: 12, color: Colors.white70)),
+                    Text('129', style: TextStyle(fontSize: 12, color: AppColors.textInverse)),
                   ],
                 ),
               ],
@@ -45,7 +46,7 @@ class LiveDetailPage extends StatelessWidget {
             child: Image.network(
               imageUrl,
               fit: BoxFit.cover,
-              color: Colors.black.withOpacity(0.5),
+              color: AppColors.mask,
               colorBlendMode: BlendMode.darken,
             ),
           ),
@@ -59,10 +60,10 @@ class LiveDetailPage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 2),
                   child: Row(
                     children: const [
-                      Icon(Icons.campaign, color: Colors.white, size: 18),
+                      Icon(Icons.campaign, color: AppColors.textInverse, size: 18),
                       SizedBox(width: 6),
-                      Text('Eid Mubarak ', style: TextStyle(color: Colors.white, fontSize: 14)),
-                      Icon(Icons.favorite, color: Colors.red, size: 14),
+                      Text('Eid Mubarak ', style: TextStyle(color: AppColors.textInverse, fontSize: 14)),
+                      Icon(Icons.favorite, color: AppColors.liveRed, size: 14),
                     ],
                   ),
                 ),
@@ -86,12 +87,12 @@ class LiveDetailPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               CircleAvatar(
-                                backgroundColor: Colors.white,
-                                child: Text('YL', style: TextStyle(color: Colors.black)),
+                                backgroundColor: AppColors.card,
+                                child: Text('YL', style: TextStyle(color: AppColors.textPrimary)),
                                 radius: 24,
                               ),
                               const SizedBox(height: 4),
-                              const Icon(Icons.monetization_on, color: Colors.amber, size: 16),
+                              const Icon(Icons.monetization_on, color: AppColors.liveGold, size: 16),
                             ],
                           );
                         } else if (index == 1) {
@@ -107,9 +108,9 @@ class LiveDetailPage extends StatelessWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: const [
-                                  Icon(Icons.monetization_on, color: Colors.amber, size: 16),
+                                  Icon(Icons.monetization_on, color: AppColors.liveGold, size: 16),
                                   SizedBox(width: 2),
-                                  Text('2', style: TextStyle(color: Colors.white, fontSize: 12)),
+                                  Text('2', style: TextStyle(color: AppColors.textInverse, fontSize: 12)),
                                 ],
                               ),
                             ],
@@ -120,12 +121,12 @@ class LiveDetailPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               CircleAvatar(
-                                backgroundColor: Colors.white.withOpacity(0.2),
-                                child: const Icon(Icons.add, color: Colors.white),
+                                backgroundColor: AppColors.card.withOpacity(0.2),
+                                child: const Icon(Icons.add, color: AppColors.textInverse),
                                 radius: 24,
                               ),
                               const SizedBox(height: 4),
-                              Text('${index + 1}', style: const TextStyle(color: Colors.white70, fontSize: 12)),
+                              Text('${index + 1}', style: TextStyle(color: AppColors.textInverse.withOpacity(0.7), fontSize: 12)),
                             ],
                           );
                         }
@@ -141,18 +142,18 @@ class LiveDetailPage extends StatelessWidget {
                     children: [
                       Row(
                         children: const [
-                          Icon(Icons.grid_view, color: Colors.white, size: 28),
+                          Icon(Icons.grid_view, color: AppColors.textInverse, size: 28),
                           SizedBox(width: 16),
-                          Icon(Icons.card_giftcard, color: Colors.white, size: 28),
+                          Icon(Icons.card_giftcard, color: AppColors.textInverse, size: 28),
                         ],
                       ),
                       Row(
                         children: const [
-                          Icon(Icons.favorite, color: Colors.pink, size: 32),
+                          Icon(Icons.favorite, color: AppColors.primary, size: 32),
                           SizedBox(width: 16),
                           CircleAvatar(
-                            backgroundColor: Colors.red,
-                            child: Icon(Icons.call_end, color: Colors.white),
+                            backgroundColor: AppColors.liveRed,
+                            child: Icon(Icons.call_end, color: AppColors.textInverse),
                             radius: 24,
                           ),
                         ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/commom/styles/colors.dart';
 
 class MyPage extends StatelessWidget {
   const MyPage({super.key});
@@ -6,7 +7,7 @@ class MyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -14,7 +15,7 @@ class MyPage extends StatelessWidget {
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Color(0xFFF857A6), Color(0xFFFF5858)],
+                colors: [AppColors.primary, AppColors.liveRed],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -26,17 +27,17 @@ class MyPage extends StatelessWidget {
                   child: TextField(
                     decoration: InputDecoration(
                       hintText: 'Search username/ID',
-                      hintStyle: const TextStyle(color: Colors.white70),
+                      hintStyle: TextStyle(color: AppColors.textInverse.withOpacity(0.7)),
                       filled: true,
-                      fillColor: Colors.white.withOpacity(0.2),
-                      prefixIcon: const Icon(Icons.search, color: Colors.white),
+                      fillColor: AppColors.textInverse.withOpacity(0.2),
+                      prefixIcon: Icon(Icons.search, color: AppColors.textInverse),
                       contentPadding: const EdgeInsets.symmetric(vertical: 0),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(24),
                         borderSide: BorderSide.none,
                       ),
                     ),
-                    style: const TextStyle(color: Colors.white),
+                    style: TextStyle(color: AppColors.textInverse),
                   ),
                 ),
               ],
@@ -50,13 +51,13 @@ class MyPage extends StatelessWidget {
                 ListTile(
                   leading: Container(
                     decoration: const BoxDecoration(
-                      color: Color(0xFFF857A6),
+                      color: AppColors.primary,
                       shape: BoxShape.circle,
                     ),
                     padding: const EdgeInsets.all(8),
-                    child: const Icon(Icons.qr_code_scanner, color: Colors.white),
+                    child: Icon(Icons.qr_code_scanner, color: AppColors.textInverse),
                   ),
-                  title: const Text('Scan QR Code'),
+                  title: Text('Scan QR Code', style: TextStyle(color: AppColors.textPrimary)),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () {},
                 ),
@@ -64,13 +65,13 @@ class MyPage extends StatelessWidget {
                 ListTile(
                   leading: Container(
                     decoration: const BoxDecoration(
-                      color: Color(0xFF1877F3),
+                      color: AppColors.accent,
                       shape: BoxShape.circle,
                     ),
                     padding: const EdgeInsets.all(8),
-                    child: const Icon(Icons.facebook, color: Colors.white),
+                    child: Icon(Icons.facebook, color: AppColors.textInverse),
                   ),
-                  title: const Text('Facebook Friends'),
+                  title: Text('Facebook Friends', style: TextStyle(color: AppColors.textPrimary)),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () {},
                 ),
@@ -78,24 +79,24 @@ class MyPage extends StatelessWidget {
                 ListTile(
                   leading: Container(
                     decoration: const BoxDecoration(
-                      color: Color(0xFF4CAF50),
+                      color: AppColors.success,
                       shape: BoxShape.circle,
                     ),
                     padding: const EdgeInsets.all(8),
-                    child: const Icon(Icons.contacts, color: Colors.white),
+                    child: Icon(Icons.contacts, color: AppColors.textInverse),
                   ),
-                  title: const Text('Contacts'),
+                  title: Text('Contacts', style: TextStyle(color: AppColors.textPrimary)),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () {},
                 ),
               ],
             ),
           ),
-          const Divider(height: 1, thickness: 1),
+          Divider(height: 1, thickness: 1, color: AppColors.divider),
           // 推荐好友
-          const Padding(
-            padding: EdgeInsets.fromLTRB(16, 16, 0, 8),
-            child: Text('You May Like', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 0, 8),
+            child: Text('You May Like', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.textPrimary)),
           ),
           Expanded(
             child: ListView.builder(
@@ -165,46 +166,46 @@ class MyPage extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(2),
                   decoration: BoxDecoration(
-                    color: Colors.pink,
+                    color: AppColors.primary,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Text(badge, style: const TextStyle(color: Colors.white, fontSize: 10)),
+                  child: Text(badge, style: TextStyle(color: AppColors.textInverse, fontSize: 10)),
                 ),
               ),
             if (isVip)
               Positioned(
                 left: -2,
                 bottom: -2,
-                child: Icon(Icons.verified, color: Colors.amber, size: 16),
+                child: Icon(Icons.verified, color: AppColors.liveGold, size: 16),
               ),
           ],
         ),
         title: Row(
           children: [
-            Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
+            Text(name, style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
             const SizedBox(width: 4),
             if (isVip)
-              const Icon(Icons.verified, color: Colors.amber, size: 16),
+              Icon(Icons.verified, color: AppColors.liveGold, size: 16),
           ],
         ),
         subtitle: Row(
           children: [
-            Text('$id, Fans:$fans'),
+            Text('$id, Fans:$fans', style: TextStyle(color: AppColors.textSecondary)),
             if (isLive)
               Container(
                 margin: const EdgeInsets.only(left: 8),
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: AppColors.accent,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Text('Live', style: TextStyle(color: Colors.white, fontSize: 12)),
+                child: Text('Live', style: TextStyle(color: AppColors.textInverse, fontSize: 12)),
               ),
           ],
         ),
         trailing: isChecked
-            ? const Icon(Icons.check_circle, color: Colors.pink)
-            : const Icon(Icons.radio_button_unchecked, color: Colors.grey),
+            ? Icon(Icons.check_circle, color: AppColors.primary)
+            : Icon(Icons.radio_button_unchecked, color: AppColors.textDisabled),
       ),
     );
   }

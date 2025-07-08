@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/commom/styles/colors.dart';
 
 class MicPage extends StatefulWidget {
   const MicPage({super.key});
@@ -34,7 +35,7 @@ class MicPageState extends State<MicPage> {
     final double bottomPadding = MediaQuery.of(context).padding.bottom;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       body: Stack(
         children: [
           // 主内容
@@ -44,7 +45,7 @@ class MicPageState extends State<MicPage> {
               Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFFEA5C8B), Color(0xFFF9A14A)],
+                    colors: [AppColors.primary, AppColors.secondary],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -57,7 +58,7 @@ class MicPageState extends State<MicPage> {
                     child: Row(
                       children: [
                         IconButton(
-                          icon: Icon(Icons.arrow_back, color: Colors.white),
+                          icon: Icon(Icons.arrow_back, color: AppColors.textInverse),
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
@@ -67,13 +68,13 @@ class MicPageState extends State<MicPage> {
                           child: Text(
                             "Hollywood (8)",
                             style: TextStyle(
-                              color: Colors.white,
+                              color: AppColors.textInverse,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                        Icon(Icons.search, color: Colors.white),
+                        Icon(Icons.search, color: AppColors.textInverse),
                       ],
                     ),
                   ),
@@ -84,7 +85,7 @@ class MicPageState extends State<MicPage> {
                 child: ListView.separated(
                   padding: EdgeInsets.zero,
                   itemCount: songs.length,
-                  separatorBuilder: (_, __) => Divider(height: 1),
+                  separatorBuilder: (_, __) => Divider(height: 1, color: AppColors.divider),
                   itemBuilder: (context, index) {
                     final song = songs[index];
                     return ListTile(
@@ -98,15 +99,15 @@ class MicPageState extends State<MicPage> {
                           errorBuilder: (context, error, stackTrace) => Container(
                             width: 48,
                             height: 48,
-                            color: Colors.grey[200],
-                            child: Icon(Icons.broken_image, color: Colors.grey),
+                            color: AppColors.divider,
+                            child: Icon(Icons.broken_image, color: AppColors.textDisabled),
                           ),
                         ),
                       ),
-                      title: Text(song["title"], style: TextStyle(fontWeight: FontWeight.bold)),
-                      subtitle: Text(song["artist"], style: TextStyle(color: Colors.grey)),
+                      title: Text(song["title"], style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
+                      subtitle: Text(song["artist"], style: TextStyle(color: AppColors.textSecondary)),
                       trailing: selectedIndexes.contains(index)
-                          ? Icon(Icons.check, color: Color(0xFFEA5C8B))
+                          ? Icon(Icons.check, color: AppColors.primary)
                           : null,
                       onTap: () {
                         setState(() {
@@ -132,7 +133,7 @@ class MicPageState extends State<MicPage> {
               height: kPlayerHeight + bottomPadding,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Color(0xFF4A90E2), Color(0xFF50E3C2)],
+                  colors: [AppColors.accent, AppColors.liveBlue],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -146,7 +147,7 @@ class MicPageState extends State<MicPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     IconButton(
-                      icon: Icon(Icons.pause, color: Colors.white, size: 22),
+                      icon: Icon(Icons.pause, color: AppColors.textInverse, size: 22),
                       onPressed: () {},
                     ),
                     Expanded(
@@ -156,7 +157,7 @@ class MicPageState extends State<MicPage> {
                         children: [
                           Text(
                             "Starboy - The Weeknd",
-                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                            style: TextStyle(color: AppColors.textInverse, fontWeight: FontWeight.bold, fontSize: 13),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -169,20 +170,20 @@ class MicPageState extends State<MicPage> {
                                 _sliderValue = v;
                               });
                             },
-                            activeColor: Colors.white,
-                            inactiveColor: Colors.white24,
+                            activeColor: AppColors.textInverse,
+                            inactiveColor: AppColors.textInverse.withOpacity(0.24),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("2:24", style: TextStyle(color: Colors.white70, fontSize: 10)),
-                              Text("-1:14", style: TextStyle(color: Colors.white70, fontSize: 10)),
+                              Text("2:24", style: TextStyle(color: AppColors.textInverse.withOpacity(0.7), fontSize: 10, fontWeight: FontWeight.w400)),
+                              Text("-1:14", style: TextStyle(color: AppColors.textInverse.withOpacity(0.7), fontSize: 10, fontWeight: FontWeight.w400)),
                             ],
                           ),
                         ],
                       ),
                     ),
-                    Icon(Icons.volume_up, color: Colors.white, size: 20),
+                    Icon(Icons.volume_up, color: AppColors.textInverse, size: 20),
                     SizedBox(width: 8),
                   ],
                 ),
