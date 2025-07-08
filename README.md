@@ -91,7 +91,7 @@ ffmpeg_kit_flutter: ^5.1.0  # 核心依赖
 bash
 克隆项目
 
-git clone https://github.com/470772345/flutter-stream.git
+git clone https://github.com/bruce4code/flutter-stream.git
 
 安装依赖
 
