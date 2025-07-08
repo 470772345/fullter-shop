@@ -7,7 +7,7 @@ class MyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -27,9 +27,9 @@ class MyPage extends StatelessWidget {
                   child: TextField(
                     decoration: InputDecoration(
                       hintText: 'Search username/ID',
-                      hintStyle: TextStyle(color: AppColors.textInverse.withAlpha((0.7 * 255).toInt())),
+                      hintStyle: TextStyle(color: Theme.of(context).colorScheme.onPrimary.withAlpha((0.7 * 255).toInt())),
                       filled: true,
-                      fillColor: AppColors.textInverse.withAlpha((0.2 * 255).toInt()),
+                      fillColor: Theme.of(context).colorScheme.onPrimary.withAlpha((0.2 * 255).toInt()),
                       prefixIcon: Icon(Icons.search, color: AppColors.textInverse),
                       contentPadding: const EdgeInsets.symmetric(vertical: 0),
                       border: OutlineInputBorder(
@@ -37,7 +37,7 @@ class MyPage extends StatelessWidget {
                         borderSide: BorderSide.none,
                       ),
                     ),
-                    style: TextStyle(color: AppColors.textInverse),
+                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
                   ),
                 ),
               ],
@@ -55,9 +55,9 @@ class MyPage extends StatelessWidget {
                       shape: BoxShape.circle,
                     ),
                     padding: const EdgeInsets.all(8),
-                    child: Icon(Icons.qr_code_scanner, color: AppColors.textInverse),
+                    child: Icon(Icons.qr_code_scanner, color: Theme.of(context).colorScheme.onPrimary),
                   ),
-                  title: Text('Scan QR Code', style: TextStyle(color: AppColors.textPrimary)),
+                  title: Text('Scan QR Code', style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color)),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () {},
                 ),
@@ -69,9 +69,9 @@ class MyPage extends StatelessWidget {
                       shape: BoxShape.circle,
                     ),
                     padding: const EdgeInsets.all(8),
-                    child: Icon(Icons.facebook, color: AppColors.textInverse),
+                    child: Icon(Icons.facebook, color: Theme.of(context).colorScheme.onPrimary),
                   ),
-                  title: Text('Facebook Friends', style: TextStyle(color: AppColors.textPrimary)),
+                  title: Text('Facebook Friends', style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color)),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () {},
                 ),
@@ -83,20 +83,20 @@ class MyPage extends StatelessWidget {
                       shape: BoxShape.circle,
                     ),
                     padding: const EdgeInsets.all(8),
-                    child: Icon(Icons.contacts, color: AppColors.textInverse),
+                    child: Icon(Icons.contacts, color: Theme.of(context).colorScheme.onPrimary),
                   ),
-                  title: Text('Contacts', style: TextStyle(color: AppColors.textPrimary)),
+                  title: Text('Contacts', style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color)),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () {},
                 ),
               ],
             ),
           ),
-          Divider(height: 1, thickness: 1, color: AppColors.divider),
+          Divider(height: 1, thickness: 1, color: Theme.of(context).dividerColor),
           // 推荐好友
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 0, 8),
-            child: Text('You May Like', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.textPrimary)),
+            child: Text('You May Like', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).textTheme.bodyLarge?.color)),
           ),
           Expanded(
             child: ListView.builder(
@@ -104,6 +104,7 @@ class MyPage extends StatelessWidget {
               itemCount: 5,
               itemBuilder: (context, index) {
                 return _buildUserItem(
+                  context: context,
                   avatar: 'https://picsum.photos/seed/$index/400/300',
                   name: [
                     'Jeanette King',
@@ -139,7 +140,8 @@ class MyPage extends StatelessWidget {
     );
   }
 
-  static Widget _buildUserItem({
+  Widget _buildUserItem({
+    required BuildContext context,
     required String avatar,
     required String name,
     required String id,
@@ -169,7 +171,7 @@ class MyPage extends StatelessWidget {
                     color: AppColors.primary,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Text(badge, style: TextStyle(color: AppColors.textInverse, fontSize: 10)),
+                  child: Text(badge, style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 10)),
                 ),
               ),
             if (isVip)
@@ -182,7 +184,7 @@ class MyPage extends StatelessWidget {
         ),
         title: Row(
           children: [
-            Text(name, style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
+            Text(name, style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).textTheme.bodyLarge?.color)),
             const SizedBox(width: 4),
             if (isVip)
               Icon(Icons.verified, color: AppColors.liveGold, size: 16),
@@ -190,7 +192,7 @@ class MyPage extends StatelessWidget {
         ),
         subtitle: Row(
           children: [
-            Text('$id, Fans:$fans', style: TextStyle(color: AppColors.textSecondary)),
+            Text('$id, Fans:$fans', style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color)),
             if (isLive)
               Container(
                 margin: const EdgeInsets.only(left: 8),
@@ -199,13 +201,13 @@ class MyPage extends StatelessWidget {
                   color: AppColors.accent,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Text('Live', style: TextStyle(color: AppColors.textInverse, fontSize: 12)),
+                child: Text('Live', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 12)),
               ),
           ],
         ),
         trailing: isChecked
             ? Icon(Icons.check_circle, color: AppColors.primary)
-            : Icon(Icons.radio_button_unchecked, color: AppColors.textDisabled),
+            : Icon(Icons.radio_button_unchecked, color: Theme.of(context).disabledColor),
       ),
     );
   }

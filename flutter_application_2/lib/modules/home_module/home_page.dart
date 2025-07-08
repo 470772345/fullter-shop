@@ -40,14 +40,14 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         title: TabBar(
           controller: _tabController,
           isScrollable: true,
-          labelColor: AppColors.textInverse,
-          unselectedLabelColor: AppColors.textInverse.withAlpha((0.7 * 255).toInt()),
-          indicatorColor: AppColors.textInverse,
+          labelColor: Theme.of(context).colorScheme.onPrimary,
+          unselectedLabelColor: Theme.of(context).colorScheme.onPrimary.withAlpha((0.7 * 255).toInt()),
+          indicatorColor: Theme.of(context).colorScheme.onPrimary,
           tabs: tabs.map((e) => Tab(text: e)).toList(),
         ),
         backgroundColor: AppColors.primary,
@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         children: [
           // 二级Tab
           Container(
-            color: AppColors.background,
+            color: Theme.of(context).scaffoldBackgroundColor,
             height: 48,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     label: Text(subTabs[index]),
                     backgroundColor: index == 0
                         ? AppColors.primary.withAlpha((0.15 * 255).toInt())
-                        : AppColors.divider,
+                        : Theme.of(context).dividerColor,
                   ),
                 );
               },
@@ -155,7 +155,7 @@ class LiveCard extends StatelessWidget {
             child: Image.network(
               imageUrl,
               fit: BoxFit.cover,
-              errorBuilder: (c, e, s) => Container(color: AppColors.divider),
+              errorBuilder: (c, e, s) => Container(color: Theme.of(context).dividerColor),
             ),
           ),
           // 顶部标签
@@ -170,7 +170,7 @@ class LiveCard extends StatelessWidget {
               ),
               child: Text(
                 tag,
-                style: const TextStyle(color: AppColors.textInverse, fontSize: 12),
+                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 12),
               ),
             ),
           ),
@@ -186,7 +186,7 @@ class LiveCard extends StatelessWidget {
               ),
               child: Text(
                 '$viewers',
-                style: const TextStyle(color: AppColors.textInverse, fontSize: 12),
+                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 12),
               ),
             ),
           ),
@@ -196,8 +196,8 @@ class LiveCard extends StatelessWidget {
             bottom: 8,
             child: Text(
               title,
-              style: const TextStyle(
-                color: AppColors.textInverse,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onPrimary,
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
                 shadows: [Shadow(color: Colors.black54, blurRadius: 4)],

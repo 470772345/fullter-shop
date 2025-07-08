@@ -35,7 +35,7 @@ class MicPageState extends State<MicPage> {
     final double bottomPadding = MediaQuery.of(context).padding.bottom;
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
           // 主内容
@@ -58,7 +58,7 @@ class MicPageState extends State<MicPage> {
                     child: Row(
                       children: [
                         IconButton(
-                          icon: Icon(Icons.arrow_back, color: AppColors.textInverse),
+                          icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onPrimary),
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
@@ -68,13 +68,13 @@ class MicPageState extends State<MicPage> {
                           child: Text(
                             "Hollywood (8)",
                             style: TextStyle(
-                              color: AppColors.textInverse,
+                              color: Theme.of(context).colorScheme.onPrimary,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                        Icon(Icons.search, color: AppColors.textInverse),
+                        Icon(Icons.search, color: Theme.of(context).colorScheme.onPrimary),
                       ],
                     ),
                   ),
@@ -85,7 +85,7 @@ class MicPageState extends State<MicPage> {
                 child: ListView.separated(
                   padding: EdgeInsets.zero,
                   itemCount: songs.length,
-                  separatorBuilder: (_, __) => Divider(height: 1, color: AppColors.divider),
+                  separatorBuilder: (_, __) => Divider(height: 1, color: Theme.of(context).dividerColor),
                   itemBuilder: (context, index) {
                     final song = songs[index];
                     return ListTile(
@@ -99,13 +99,13 @@ class MicPageState extends State<MicPage> {
                           errorBuilder: (context, error, stackTrace) => Container(
                             width: 48,
                             height: 48,
-                            color: AppColors.divider,
-                            child: Icon(Icons.broken_image, color: AppColors.textDisabled),
+                            color: Theme.of(context).dividerColor,
+                            child: Icon(Icons.broken_image, color: Theme.of(context).textTheme.bodySmall?.color?.withAlpha((0.5 * 255).toInt())),
                           ),
                         ),
                       ),
-                      title: Text(song["title"], style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
-                      subtitle: Text(song["artist"], style: TextStyle(color: AppColors.textSecondary)),
+                      title: Text(song["title"], style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).textTheme.bodyLarge?.color)),
+                      subtitle: Text(song["artist"], style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color)),
                       trailing: selectedIndexes.contains(index)
                           ? Icon(Icons.check, color: AppColors.primary)
                           : null,
@@ -147,7 +147,7 @@ class MicPageState extends State<MicPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     IconButton(
-                      icon: Icon(Icons.pause, color: AppColors.textInverse, size: 22),
+                      icon: Icon(Icons.pause, color: Theme.of(context).colorScheme.onPrimary, size: 22),
                       onPressed: () {},
                     ),
                     Expanded(
@@ -157,7 +157,7 @@ class MicPageState extends State<MicPage> {
                         children: [
                           Text(
                             "Starboy - The Weeknd",
-                            style: TextStyle(color: AppColors.textInverse, fontWeight: FontWeight.bold, fontSize: 13),
+                            style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontWeight: FontWeight.bold, fontSize: 13),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -170,20 +170,20 @@ class MicPageState extends State<MicPage> {
                                 _sliderValue = v;
                               });
                             },
-                            activeColor: AppColors.textInverse,
-                            inactiveColor: AppColors.textInverse.withAlpha((0.24 * 255).toInt()),
+                            activeColor: Theme.of(context).colorScheme.onPrimary,
+                            inactiveColor: Theme.of(context).colorScheme.onPrimary.withAlpha((0.24 * 255).toInt()),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("2:24", style: TextStyle(color: AppColors.textInverse.withAlpha((0.7 * 255).toInt()), fontSize: 10, fontWeight: FontWeight.w400)),
-                              Text("-1:14", style: TextStyle(color: AppColors.textInverse.withAlpha((0.7 * 255).toInt()), fontSize: 10, fontWeight: FontWeight.w400)),
+                              Text("2:24", style: TextStyle(color: Theme.of(context).colorScheme.onPrimary.withAlpha((0.7 * 255).toInt()), fontSize: 10, fontWeight: FontWeight.w400)),
+                              Text("-1:14", style: TextStyle(color: Theme.of(context).colorScheme.onPrimary.withAlpha((0.7 * 255).toInt()), fontSize: 10, fontWeight: FontWeight.w400)),
                             ],
                           ),
                         ],
                       ),
                     ),
-                    Icon(Icons.volume_up, color: AppColors.textInverse, size: 20),
+                    Icon(Icons.volume_up, color: Theme.of(context).colorScheme.onPrimary, size: 20),
                     SizedBox(width: 8),
                   ],
                 ),

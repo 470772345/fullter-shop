@@ -23,12 +23,12 @@ class LiveDetailPage extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: const TextStyle(fontSize: 16, color: AppColors.textInverse)),
+                Text(title, style: TextStyle(fontSize: 16, color: Theme.of(context).colorScheme.onPrimary)),
                 Row(
-                  children: const [
-                    Icon(Icons.remove_red_eye, size: 14, color: AppColors.textInverse),
+                  children: [
+                    Icon(Icons.remove_red_eye, size: 14, color: Theme.of(context).colorScheme.onPrimary),
                     SizedBox(width: 2),
-                    Text('129', style: TextStyle(fontSize: 12, color: AppColors.textInverse)),
+                    Text('129', style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onPrimary)),
                   ],
                 ),
               ],
@@ -36,7 +36,7 @@ class LiveDetailPage extends StatelessWidget {
           ],
         ),
         actions: [
-          IconButton(icon: const Icon(Icons.close), onPressed: () => Navigator.pop(context)),
+          IconButton(icon: Icon(Icons.close), onPressed: () => Navigator.pop(context)),
         ],
       ),
       body: Stack(
@@ -59,10 +59,10 @@ class LiveDetailPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 2),
                   child: Row(
-                    children: const [
-                      Icon(Icons.campaign, color: AppColors.textInverse, size: 18),
+                    children: [
+                      Icon(Icons.campaign, color: Theme.of(context).colorScheme.onPrimary, size: 18),
                       SizedBox(width: 6),
-                      Text('Eid Mubarak ', style: TextStyle(color: AppColors.textInverse, fontSize: 14)),
+                      Text('Eid Mubarak ', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 14)),
                       Icon(Icons.favorite, color: AppColors.liveRed, size: 14),
                     ],
                   ),
@@ -91,8 +91,8 @@ class LiveDetailPage extends StatelessWidget {
                                 radius: 24,
                                 child: Text('YL', style: TextStyle(color: AppColors.textPrimary)),
                               ),
-                              const SizedBox(height: 4),
-                              const Icon(Icons.monetization_on, color: AppColors.liveGold, size: 16),
+                              SizedBox(height: 4),
+                              Icon(Icons.monetization_on, color: AppColors.liveGold, size: 16),
                             ],
                           );
                         } else if (index == 1) {
@@ -104,13 +104,13 @@ class LiveDetailPage extends StatelessWidget {
                                 radius: 24,
                                 backgroundImage: NetworkImage('https://randomuser.me/api/portraits/women/2.jpg'),
                               ),
-                              const SizedBox(height: 4),
+                              SizedBox(height: 4),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
+                                children: [
                                   Icon(Icons.monetization_on, color: AppColors.liveGold, size: 16),
                                   SizedBox(width: 2),
-                                  Text('2', style: TextStyle(color: AppColors.textInverse, fontSize: 12)),
+                                  Text('2', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 12)),
                                 ],
                               ),
                             ],
@@ -123,10 +123,10 @@ class LiveDetailPage extends StatelessWidget {
                               CircleAvatar(
                                 backgroundColor: AppColors.card.withAlpha((0.2 * 255).toInt()),
                                 radius: 24,
-                                child: const Icon(Icons.add, color: AppColors.textInverse),
+                                child: Icon(Icons.add, color: AppColors.textPrimary),
                               ),
-                              const SizedBox(height: 4),
-                              Text('${index + 1}', style: TextStyle(color: AppColors.textInverse.withAlpha((0.7 * 255).toInt()), fontSize: 12)),
+                              SizedBox(height: 4),
+                              Text('${index + 1}', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary.withAlpha((0.7 * 255).toInt()), fontSize: 12)),
                             ],
                           );
                         }
@@ -141,20 +141,20 @@ class LiveDetailPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
-                        children: const [
-                          Icon(Icons.grid_view, color: AppColors.textInverse, size: 28),
+                        children: [
+                          Icon(Icons.grid_view, color: Theme.of(context).colorScheme.onPrimary, size: 28),
                           SizedBox(width: 16),
-                          Icon(Icons.card_giftcard, color: AppColors.textInverse, size: 28),
+                          Icon(Icons.card_giftcard, color: Theme.of(context).colorScheme.onPrimary, size: 28),
                         ],
                       ),
                       Row(
-                        children: const [
+                        children: [
                           Icon(Icons.favorite, color: AppColors.primary, size: 32),
                           SizedBox(width: 16),
                           CircleAvatar(
                             backgroundColor: AppColors.liveRed,
                             radius: 24,
-                            child: Icon(Icons.call_end, color: AppColors.textInverse),
+                            child: Icon(Icons.call_end, color: Theme.of(context).colorScheme.onPrimary),
                           ),
                         ],
                       ),
