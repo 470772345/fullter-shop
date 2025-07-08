@@ -45,7 +45,15 @@ class _LiveHomePageState extends State<LiveHomePage> {
       body: _pages[_bottomIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _bottomIndex,
-        onTap: (i) => setState(() => _bottomIndex = i),
+        onTap: (i) {
+          if (i == 2) { // Mic tab
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => MicPage()),
+            );
+          } else {
+            setState(() => _bottomIndex = i);
+          }
+        },
         selectedItemColor: Colors.pink,
         unselectedItemColor: const Color.fromARGB(255, 229, 226, 217),
         unselectedLabelStyle: const TextStyle(

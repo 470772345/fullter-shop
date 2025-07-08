@@ -24,40 +24,52 @@ class MicPageState extends State<MicPage> {
   // 选中的歌曲索引
   final Set<int> selectedIndexes = {0, 1, 3};
 
+  static const double kBottomNavBarHeight = 70.0; // Flutter默认BottomNavigationBar高度
+  static const double kPlayerHeight = 80.0;
+  double _sliderValue = 2.24; 
+
   @override
   Widget build(BuildContext context) {
+
+    final double bottomPadding = MediaQuery.of(context).padding.bottom;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
         children: [
+          // 主内容
           Column(
             children: [
               // 渐变AppBar
-              Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xFFEA5C8B), Color(0xFFF9A14A)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+              SafeArea(
+                top: true,
+                bottom: false,
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Color(0xFFEA5C8B), Color(0xFFF9A14A)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
                   ),
-                ),
-                padding: EdgeInsets.only(top: 40, left: 16, right: 16, bottom: 16),
-                child: Row(
-                  children: [
-                    Icon(Icons.arrow_back, color: Colors.white),
-                    SizedBox(width: 16),
-                    Expanded(
-                      child: Text(
-                        "Hollywood (8)",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  child: Row(
+                    children: [
+                      Icon(Icons.arrow_back, color: Colors.white),
+                      SizedBox(width: 16),
+                      Expanded(
+                        child: Text(
+                          "Hollywood (8)",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                    Icon(Icons.search, color: Colors.white),
-                  ],
+                      Icon(Icons.search, color: Colors.white),
+                    ],
+                  ),
                 ),
               ),
               // 歌曲列表
@@ -74,6 +86,12 @@ class MicPageState extends State<MicPage> {
                         width: 48,
                         height: 48,
                         fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) => Container(
+                          width: 48,
+                          height: 48,
+                          color: Colors.grey[200],
+                          child: Icon(Icons.broken_image, color: Colors.grey),
+                        ),
                       ),
                       title: Text(song["title"], style: TextStyle(fontWeight: FontWeight.bold)),
                       subtitle: Text(song["artist"], style: TextStyle(color: Colors.grey)),
@@ -93,62 +111,72 @@ class MicPageState extends State<MicPage> {
                   },
                 ),
               ),
-              SizedBox(height: 70), // 给底部播放器留空间
             ],
           ),
-          // 底部播放器
+          // 悬浮底部播放器
           Positioned(
             left: 0,
             right: 0,
             bottom: 0,
             child: Container(
-              height: 70,
+              height: kPlayerHeight + bottomPadding,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [Color(0xFF4A90E2), Color(0xFF50E3C2)],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
-                borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
               ),
-              child: Row(
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.pause, color: Colors.white),
-                    onPressed: () {},
-                  ),
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Starboy - The Weeknd",
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(height: 4),
-                        Row(
-                          children: [
-                            Text("2:24", style: TextStyle(color: Colors.white70, fontSize: 12)),
-                            Expanded(
-                              child: Slider(
-                                value: 2.24,
-                                min: 0,
-                                max: 3.38,
-                                onChanged: (v) {},
-                                activeColor: Colors.white,
-                                inactiveColor: Colors.white24,
-                              ),
-                            ),
-                            Text("-1:14", style: TextStyle(color: Colors.white70, fontSize: 12)),
-                          ],
-                        ),
-                      ],
+              child: SafeArea(
+                top: false,
+                left: false,
+                right: false,
+                bottom: true,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.pause, color: Colors.white, size: 22),
+                      onPressed: () {},
                     ),
-                  ),
-                  Icon(Icons.volume_up, color: Colors.white),
-                  SizedBox(width: 16),
-                ],
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Starboy - The Weeknd",
+                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Row(
+                            children: [
+                              Text("2:24", style: TextStyle(color: Colors.white70, fontSize: 10)),
+                              Expanded(
+                                child: Slider(
+                                  value: _sliderValue,
+                                  min: 0,
+                                  max: 3.38,
+                                  onChanged: (v) {
+                                    setState(() {
+                                      _sliderValue = v;
+                                    });
+                                  },
+                                  activeColor: Colors.white,
+                                  inactiveColor: Colors.white24,
+                                ),
+                              ),
+                              Text("-1:14", style: TextStyle(color: Colors.white70, fontSize: 10)),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Icon(Icons.volume_up, color: Colors.white, size: 20),
+                    SizedBox(width: 8),
+                  ],
+                ),
               ),
             ),
           ),
