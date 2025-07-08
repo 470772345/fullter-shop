@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2/modules/mic_module/mic_page.dart';
 import 'package:flutter_application_2/modules/user_module/me_page.dart';
 import 'package:flutter_application_2/modules/home_module/home_page.dart';
+import 'package:flutter_application_2/modules/live_module/live_page.dart';
+
 import 'commom/styles/theme.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(
-  ChangeNotifierProvider(
-    create: (_) => ThemeProvider(),
-    child: const MyApp(),
-  ),
+  ChangeNotifierProvider(create: (_) => ThemeProvider(), child: const MyApp()),
 );
 
 class MyApp extends StatelessWidget {
@@ -40,12 +39,7 @@ class _LiveHomePageState extends State<LiveHomePage> {
   @override
   void initState() {
     super.initState();
-    _pages = [
-      HomePage(),
-      Center(child: Text('Live')),
-      MicPage(),
-      MyPage(),
-    ];
+    _pages = [HomePage(), LivePage(), MicPage(), MyPage()];
   }
 
   @override
@@ -56,10 +50,17 @@ class _LiveHomePageState extends State<LiveHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _bottomIndex,
         onTap: (i) {
-          if (i == 2) { // Mic tab
-            Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => MicPage()),
-            );
+          if (i == 2) {
+            // Mic tab
+            Navigator.of(
+              context,
+            ).push(MaterialPageRoute(builder: (_) => MicPage()));
+          }
+          if (i == 1) {
+            // Live tab
+            Navigator.of(
+              context,
+            ).push(MaterialPageRoute(builder: (_) => LivePage()));
           } else {
             setState(() => _bottomIndex = i);
           }

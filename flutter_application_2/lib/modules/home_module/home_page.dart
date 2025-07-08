@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/modules/live_module/live_detail_page.dart';
 import 'package:flutter_application_2/commom/styles/colors.dart';
+import 'dart:math';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -100,7 +101,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               ),
               itemCount: 16,
               itemBuilder: (context, index) {
-                final imageUrl = 'https://picsum.photos/seed/$index/400/300';
+                final random = Random();
+                final imageUrl = 'https://picsum.photos/seed/${random.nextInt(100000)}/400/300';
                 final title = index % 2 == 0 ? 'Lets Join' : 'Bring music to Live';
                 final tag = index % 2 == 0 ? 'Super Star' : 'LIVE HOUSE';
                 if (tag == 'LIVE HOUSE') {
