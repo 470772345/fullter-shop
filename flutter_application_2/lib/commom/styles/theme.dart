@@ -24,6 +24,18 @@ final ThemeData appDarkTheme = ThemeData(
   // 可继续配置 textTheme、iconTheme 等
 );
 
+class ThemeProvider extends ChangeNotifier {
+  ThemeMode _themeMode = ThemeMode.system;
+  ThemeMode get themeMode => _themeMode;
+
+  void setTheme(ThemeMode mode) {
+    if (_themeMode != mode) {
+      _themeMode = mode;
+      notifyListeners();
+    }
+  }
+}
+
 // 在 main.dart 里这样用：
 // MaterialApp(
 //   theme: appTheme,

@@ -3,18 +3,25 @@ import 'package:flutter_application_2/modules/mic_module/mic_page.dart';
 import 'package:flutter_application_2/modules/user_module/me_page.dart';
 import 'package:flutter_application_2/modules/home_module/home_page.dart';
 import 'commom/styles/theme.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(
+  ChangeNotifierProvider(
+    create: (_) => ThemeProvider(),
+    child: const MyApp(),
+  ),
+);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return MaterialApp(
       title: 'Live App Demo',
       theme: appTheme,
       darkTheme: appDarkTheme,
-      themeMode: ThemeMode.system,
+      themeMode: themeProvider.themeMode,
       home: LiveHomePage(),
     );
   }

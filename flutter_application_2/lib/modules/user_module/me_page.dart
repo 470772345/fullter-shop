@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/commom/styles/colors.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_application_2/commom/styles/theme.dart';
 
 class MyPage extends StatelessWidget {
   const MyPage({super.key});
@@ -88,6 +90,24 @@ class MyPage extends StatelessWidget {
                   title: Text('Contacts', style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color)),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () {},
+                ),
+                const SizedBox(height: 8),
+                ListTile(
+                  leading: Container(
+                    decoration: const BoxDecoration(
+                      color: AppColors.divider,
+                      shape: BoxShape.circle,
+                    ),
+                    padding: const EdgeInsets.all(8),
+                    child: Icon(Icons.settings, color: Theme.of(context).colorScheme.onPrimary),
+                  ),
+                  title: Text('Setting', style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color)),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => SettingPage()),
+                    );
+                  },
                 ),
               ],
             ),
@@ -210,5 +230,54 @@ class MyPage extends StatelessWidget {
             : Icon(Icons.radio_button_unchecked, color: Theme.of(context).disabledColor),
       ),
     );
+  }
+}
+
+class SettingPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    ThemeMode currentMode = themeProvider.themeMode;
+    return Scaffold(
+      appBar: AppBar(title: Text('Setting')),
+      body: ListView(
+        children: [
+          ListTile(
+            title: Text('Theme'),
+            subtitle: Text(_themeModeLabel(currentMode)),
+          ),
+          RadioListTile<ThemeMode>(
+            title: Text('System'),
+            value: ThemeMode.system,
+            groupValue: currentMode,
+            onChanged: (mode) => themeProvider.setTheme(mode!),
+          ),
+          RadioListTile<ThemeMode>(
+            title: Text('Light'),
+            value: ThemeMode.light,
+            groupValue: currentMode,
+            onChanged: (mode) => themeProvider.setTheme(mode!),
+          ),
+          RadioListTile<ThemeMode>(
+            title: Text('Dark'),
+            value: ThemeMode.dark,
+            groupValue: currentMode,
+            onChanged: (mode) => themeProvider.setTheme(mode!),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _themeModeLabel(ThemeMode mode) {
+    switch (mode) {
+      case ThemeMode.light:
+        return 'Light';
+      case ThemeMode.dark:
+        return 'Dark';
+      case ThemeMode.system:
+      default:
+        return 'System';
+    }
   }
 }
