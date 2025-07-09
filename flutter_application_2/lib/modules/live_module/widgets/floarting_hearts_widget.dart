@@ -13,16 +13,18 @@ class FloatingHeartsState extends State<FloatingHearts> {
 
   void addHeart(Offset offset) {
     final key = UniqueKey();
-    _hearts.add(_AnimatedHeart(
-      key: key,
-      startX: offset.dx,
-      startY: offset.dy,
-      onEnd: () {
-        setState(() {
-          _hearts.removeWhere((h) => (h.key == key));
-        });
-      },
-    ));
+    _hearts.add(
+      _AnimatedHeart(
+        key: key,
+        startX: offset.dx,
+        startY: offset.dy,
+        onEnd: () {
+          setState(() {
+            _hearts.removeWhere((h) => (h.key == key));
+          });
+        },
+      ),
+    );
     setState(() {});
   }
 
@@ -35,13 +37,19 @@ class FloatingHeartsState extends State<FloatingHearts> {
 class _AnimatedHeart extends StatefulWidget {
   final double startX, startY;
   final VoidCallback onEnd;
-  const _AnimatedHeart({Key? key, required this.startX, required this.startY, required this.onEnd}) : super(key: key);
+  const _AnimatedHeart({
+    Key? key,
+    required this.startX,
+    required this.startY,
+    required this.onEnd,
+  }) : super(key: key);
 
   @override
   State<_AnimatedHeart> createState() => _AnimatedHeartState();
 }
 
-class _AnimatedHeartState extends State<_AnimatedHeart> with SingleTickerProviderStateMixin {
+class _AnimatedHeartState extends State<_AnimatedHeart>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
   late double dx, dy, endX, endY, scale, angle;
@@ -57,7 +65,10 @@ class _AnimatedHeartState extends State<_AnimatedHeart> with SingleTickerProvide
     scale = 0.8 + random.nextDouble() * 0.6;
     angle = (random.nextDouble() - 0.5) * 0.6;
 
-    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 1200));
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    );
     _animation = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
     _controller.forward();
     _controller.addStatusListener((status) {
@@ -82,6 +93,7 @@ class _AnimatedHeartState extends State<_AnimatedHeart> with SingleTickerProvide
         final y = dy + (endY - dy) * t;
         final opacity = 1.0 - t;
         final s = scale + 0.2 * t;
+
         return Positioned(
           left: x,
           top: y,
@@ -91,7 +103,11 @@ class _AnimatedHeartState extends State<_AnimatedHeart> with SingleTickerProvide
               angle: angle * t,
               child: Transform.scale(
                 scale: s,
-                child: Icon(Icons.favorite, color: Colors.pinkAccent, size: 36),
+                child: Icon(
+                  Icons.favorite,
+                  color:  Theme.of(context).primaryColor,
+                  size: 36,
+                ),
               ),
             ),
           ),

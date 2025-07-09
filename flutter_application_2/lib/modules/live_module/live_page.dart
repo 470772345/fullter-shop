@@ -135,7 +135,7 @@ class _LivePageState extends State<LivePage> {
                     ),
                     const SizedBox(width: 8),
                     IconButton(
-                      icon: Icon(Icons.card_giftcard, color: AppColors.primary),
+                      icon: Icon(Icons.card_giftcard, color: Theme.of(context).colorScheme.primary),
                       onPressed: () {},
                     ),
                     IconButton(
@@ -144,19 +144,19 @@ class _LivePageState extends State<LivePage> {
                     ),
                     IconButton(
                       key: _likeBtnKey,
-                      icon: Icon(Icons.favorite, color: AppColors.primary),
+                      icon: Icon(Icons.favorite, color:  Theme.of(context).primaryColor),
                       onPressed: () {
-                        // 获取按钮在Stack中的位置
-                        final RenderBox? btnBox = _likeBtnKey.currentContext?.findRenderObject() as RenderBox?;
-                        final RenderBox? stackBox = context.findRenderObject() as RenderBox?;
-                        if (btnBox != null && stackBox != null) {
-                          final btnOffset = btnBox.localToGlobal(btnBox.size.center(Offset.zero));
-                          final stackOffset = stackBox.globalToLocal(btnOffset);
-                          print(stackOffset);
-                             // 这里微调，假设偏下偏右，y轴减去20，x轴减去10
-                          final adjustedOffset = stackOffset.translate(-14, -20);
-                          _heartsKey.currentState?.addHeart(adjustedOffset);
-                        }
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          final RenderBox? btnBox = _likeBtnKey.currentContext?.findRenderObject() as RenderBox?;
+                          final RenderBox? stackBox = context.findRenderObject() as RenderBox?;
+                          if (btnBox != null && stackBox != null) {
+                            final btnOffset = btnBox.localToGlobal(btnBox.size.center(Offset.zero));
+                            final stackOffset = stackBox.globalToLocal(btnOffset);
+                            print(stackOffset);
+                            final adjustedOffset = stackOffset.translate(-14, -20);
+                            _heartsKey.currentState?.addHeart(adjustedOffset);
+                          }
+                        });
                       },
                     ),
                   ],
