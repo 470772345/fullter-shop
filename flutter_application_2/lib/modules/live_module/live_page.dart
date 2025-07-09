@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/commom/styles/colors.dart';
+import 'package:flutter_application_2/modules/live_module/widgets/danmaku_widget.dart';
 
 class LivePage extends StatelessWidget {
   const LivePage({super.key});
@@ -7,15 +8,15 @@ class LivePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
           // 播放器区域（实际应为视频播放器，这里用Container占位）
           Positioned.fill(
             child: Container(
-              color: Colors.black,
+              color: Theme.of(context).scaffoldBackgroundColor,
               child: Center(
-                child: Icon(Icons.live_tv, color: Colors.white24, size: 120),
+                child: Icon(Icons.live_tv, color: Theme.of(context).dividerColor.withAlpha((0.24 * 255).toInt()), size: 120),
               ),
             ),
           ),
@@ -28,7 +29,7 @@ class LivePage extends StatelessWidget {
                 children: [
                   // 主播头像+昵称
                   CircleAvatar(
-                    backgroundImage: NetworkImage('https://randomuser.me/api/portraits/women/1.jpg'),
+                    backgroundImage: NetworkImage('https://picsum.photos/seed/host/400/300'),
                     radius: 20,
                   ),
                   const SizedBox(width: 8),
@@ -37,16 +38,16 @@ class LivePage extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Text('Jeanette King', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
+                          Text('Jeanette King', style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color, fontWeight: FontWeight.bold, fontSize: 16)),
                           const SizedBox(width: 4),
                           Icon(Icons.verified, color: AppColors.liveGold, size: 16),
                         ],
                       ),
                       Row(
                         children: [
-                          Icon(Icons.remove_red_eye, color: Colors.white70, size: 14),
+                          Icon(Icons.remove_red_eye, color: Theme.of(context).textTheme.bodyMedium?.color?.withAlpha((0.7 * 255).toInt()), size: 14),
                           const SizedBox(width: 2),
-                          Text('139', style: TextStyle(color: Colors.white70, fontSize: 12)),
+                          Text('139', style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color?.withAlpha((0.7 * 255).toInt()), fontSize: 12)),
                         ],
                       ),
                     ],
@@ -61,7 +62,7 @@ class LivePage extends StatelessWidget {
                         itemCount: 5,
                         separatorBuilder: (_, __) => SizedBox(width: -10),
                         itemBuilder: (context, i) => CircleAvatar(
-                          backgroundImage: NetworkImage('https://randomuser.me/api/portraits/men/${i+10}.jpg'),
+                          backgroundImage: NetworkImage('https://picsum.photos/seed/$i/400/300'),
                           radius: 16,
                         ),
                       ),
@@ -69,7 +70,7 @@ class LivePage extends StatelessWidget {
                   ),
                   // 关闭按钮
                   IconButton(
-                    icon: Icon(Icons.close, color: Colors.white),
+                    icon: Icon(Icons.close, color: Theme.of(context).colorScheme.onPrimary),
                     onPressed: () => Navigator.pop(context),
                   ),
                 ],
@@ -83,16 +84,16 @@ class LivePage extends StatelessWidget {
             bottom: 90,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildDanmu('Support the broadcaster by Opening VIP', Colors.pinkAccent),
-                  _buildDanmu('Ramesh joined the LIVE', Colors.amber),
-                  _buildDanmu('Ankush joined the LIVE 😊', Colors.blueAccent),
-                  _buildDanmu('The broadcaster invites you to join a PK', Colors.purpleAccent),
-                  _buildDanmu('Sumit joined the LIVE', Colors.greenAccent),
+              child: DanmakuView(
+                messages: [
+                  DanmakuMessage(id: '1', userName: '小明', content: '主播好帅！'),
+                  DanmakuMessage(id: '2', userName: '小红', content: '666666'),
+                  DanmakuMessage(id: '3', userName: '小刚', content: '送出火箭'),
+                  DanmakuMessage(id: '4', userName: '小美', content: '来了来了'),
+                  DanmakuMessage(id: '5', userName: '小王', content: '关注主播不迷路'),
                 ],
+                maxLines: 3,
+                speed: 6.0,
               ),
             ),
           ),
@@ -105,7 +106,7 @@ class LivePage extends StatelessWidget {
               top: false,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                color: Colors.black.withOpacity(0.2),
+                color: Theme.of(context).scaffoldBackgroundColor.withAlpha((0.2 * 255).toInt()),
                 child: Row(
                   children: [
                     // 输入框占位
@@ -113,25 +114,25 @@ class LivePage extends StatelessWidget {
                       child: Container(
                         height: 40,
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.08),
+                          color: Theme.of(context).dividerColor.withAlpha((0.08 * 255).toInt()),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         alignment: Alignment.centerLeft,
-                        child: Text('Say hi...', style: TextStyle(color: Colors.white54)),
+                        child: Text('Say hi...', style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color?.withAlpha((0.5 * 255).toInt()))),
                       ),
                     ),
                     const SizedBox(width: 8),
                     IconButton(
-                      icon: Icon(Icons.card_giftcard, color: Colors.pinkAccent),
+                      icon: Icon(Icons.card_giftcard, color: AppColors.primary),
                       onPressed: () {},
                     ),
                     IconButton(
-                      icon: Icon(Icons.menu, color: Colors.white),
+                      icon: Icon(Icons.menu, color: Theme.of(context).colorScheme.onPrimary),
                       onPressed: () {},
                     ),
                     IconButton(
-                      icon: Icon(Icons.favorite, color: Colors.pinkAccent),
+                      icon: Icon(Icons.favorite, color: AppColors.primary),
                       onPressed: () {},
                     ),
                   ],
@@ -141,18 +142,6 @@ class LivePage extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildDanmu(String text, Color color) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 2),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.15),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Text(text, style: TextStyle(color: color, fontWeight: FontWeight.w500)),
     );
   }
 }
