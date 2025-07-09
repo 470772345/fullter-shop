@@ -1,9 +1,20 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/commom/styles/colors.dart';
 import 'package:flutter_application_2/modules/live_module/widgets/danmaku_widget.dart';
+import 'package:flutter_application_2/modules/live_module/widgets/floarting_hearts_widget.dart';
 
-class LivePage extends StatelessWidget {
+class LivePage extends StatefulWidget {
   const LivePage({super.key});
+
+  @override
+  State<LivePage> createState() => _LivePageState();
+}
+
+class _LivePageState extends State<LivePage> {
+  final GlobalKey<FloatingHeartsState> _heartsKey = GlobalKey<FloatingHeartsState>();
+  final GlobalKey _likeBtnKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -132,13 +143,30 @@ class LivePage extends StatelessWidget {
                       onPressed: () {},
                     ),
                     IconButton(
+                      key: _likeBtnKey,
                       icon: Icon(Icons.favorite, color: AppColors.primary),
-                      onPressed: () {},
+                      onPressed: () {
+                        // 获取按钮在Stack中的位置
+                        final RenderBox? btnBox = _likeBtnKey.currentContext?.findRenderObject() as RenderBox?;
+                        final RenderBox? stackBox = context.findRenderObject() as RenderBox?;
+                        if (btnBox != null && stackBox != null) {
+                          final btnOffset = btnBox.localToGlobal(btnBox.size.center(Offset.zero));
+                          final stackOffset = stackBox.globalToLocal(btnOffset);
+                          print(stackOffset);
+                             // 这里微调，假设偏下偏右，y轴减去20，x轴减去10
+                          final adjustedOffset = stackOffset.translate(-14, -20);
+                          _heartsKey.currentState?.addHeart(adjustedOffset);
+                        }
+                      },
                     ),
                   ],
                 ),
               ),
             ),
+          ),
+          // 飘心动画层，放在Stack最上层
+          Positioned.fill(
+            child: FloatingHearts(key: _heartsKey),
           ),
         ],
       ),
