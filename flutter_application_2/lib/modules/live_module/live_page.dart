@@ -86,14 +86,14 @@ class LivePage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: DanmakuView(
                 messages: [
-                  DanmakuMessage(id: '1', userName: '小明', content: '主播好帅！'),
-                  DanmakuMessage(id: '2', userName: '小红', content: '666666'),
-                  DanmakuMessage(id: '3', userName: '小刚', content: '送出火箭'),
-                  DanmakuMessage(id: '4', userName: '小美', content: '来了来了'),
-                  DanmakuMessage(id: '5', userName: '小王', content: '关注主播不迷路'),
+                  DanmakuMessage(id: '1', userName: 'Lee', content: '主播好帅！'),
+                  DanmakuMessage(id: '2', userName: 'Bruce4code', content: '666666666666666'),
+                  DanmakuMessage(id: '3', userName: 'Bruce', content: '送出火箭'),
+                  DanmakuMessage(id: '4', userName: 'Tao', content: '来了来了'),
+                  DanmakuMessage(id: '5', userName: 'Mac', content: '关注主播不迷路'),
                 ],
                 maxLines: 3,
-                speed: 6.0,
+                trackSpeeds: [4.0, 6.0, 8.0], // 轨道1快，轨道2中，轨道3慢
               ),
             ),
           ),

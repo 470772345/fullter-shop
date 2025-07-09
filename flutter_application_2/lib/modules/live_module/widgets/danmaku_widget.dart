@@ -14,12 +14,14 @@ class DanmakuMessage {
 class DanmakuView extends StatefulWidget {
   final List<DanmakuMessage> messages;
   final int maxLines;
-  final double speed; // 单位：秒
+  final double speed; // 全局默认速度（秒）
+  final List<double>? trackSpeeds; // 每个轨道的速度（秒）
   const DanmakuView({
     super.key,
     required this.messages,
     this.maxLines = 3,
     this.speed = 6.0,
+    this.trackSpeeds,
   });
 
   @override
@@ -64,9 +66,13 @@ class _DanmakuViewState extends State<DanmakuView> {
           bestTime = trackAvailable[t];
         }
       }
+      // 轨道速度
+      final speed = widget.trackSpeeds != null && widget.trackSpeeds!.length > bestTrack
+          ? widget.trackSpeeds![bestTrack]
+          : widget.speed;
       // 计算 delay，确保前一条弹幕尾部离开屏幕
       final prevWidth = trackPrevWidth[bestTrack];
-      final speedPxPerMs = (screenWidth + width) / (widget.speed * 1000);
+      final speedPxPerMs = (screenWidth + width) / (speed * 1000);
       final safeGap = 24.0; // px
       final timeToSafe = ((prevWidth + safeGap) / speedPxPerMs).ceil(); // ms
       final delayMs = bestTime.isAfter(now) ? bestTime.difference(now).inMilliseconds : 0;
@@ -74,6 +80,7 @@ class _DanmakuViewState extends State<DanmakuView> {
       tracks[bestTrack].add(_DanmakuTrackItem(
         message: widget.messages[i],
         delay: Duration(milliseconds: totalDelay),
+        duration: Duration(milliseconds: (speed * 1000).toInt()),
       ));
       // 更新轨道下次可用时间和宽度
       trackAvailable[bestTrack] = now.add(Duration(milliseconds: totalDelay));
@@ -105,7 +112,7 @@ class _DanmakuViewState extends State<DanmakuView> {
                 return _AnimatedDanmakuItem(
                   key: ValueKey(item.message.id),
                   message: item.message,
-                  duration: Duration(seconds: widget.speed.toInt()),
+                  duration: item.duration,
                   delay: item.delay,
                 );
               }),
@@ -120,7 +127,8 @@ class _DanmakuViewState extends State<DanmakuView> {
 class _DanmakuTrackItem {
   final DanmakuMessage message;
   final Duration delay;
-  _DanmakuTrackItem({required this.message, required this.delay});
+  final Duration duration;
+  _DanmakuTrackItem({required this.message, required this.delay, required this.duration});
 }
 
 class _AnimatedDanmakuItem extends StatefulWidget {
