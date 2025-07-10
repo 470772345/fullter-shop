@@ -61,7 +61,7 @@ class _AnimatedHeartState extends State<_AnimatedHeart>
     dx = widget.startX;
     dy = widget.startY;
     endX = dx + random.nextDouble() * 60 * (random.nextBool() ? 1 : -1);
-    endY = dy - 180 - random.nextDouble() * 40;
+    endY = dy - 380 - random.nextDouble() * 40;
     scale = 0.8 + random.nextDouble() * 0.6;
     angle = (random.nextDouble() - 0.5) * 0.6;
 
