@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'live_mic_page.dart';
+import 'live_room_page.dart';
 import 'package:flutter_application_2/modules/live_module/models/live_room_info.dart';
 
 
@@ -40,7 +41,7 @@ class LiveSquarePage extends StatelessWidget {
                 ),
               ),
             ),
-            // 底部“进入直播间”按钮
+            // 底部"进入直播间"按钮
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
@@ -54,15 +55,26 @@ class LiveSquarePage extends StatelessWidget {
                   ),
                   child: const Text('进入直播间', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => LiveMicRoomPage(
-                          title: room.title,
-                          imageUrl: room.coverUrl,
+                    if (room.roomType == 'mic_room') {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => LiveMicRoomPage(
+                            title: room.title,
+                            coverUrl: room.coverUrl,
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => LivePage(
+                            // 你可以在 LivePage 构造函数里加 title/coverUrl 参数
+                          ),
+                        ),
+                      );
+                    }
                   },
                 ),
               ),

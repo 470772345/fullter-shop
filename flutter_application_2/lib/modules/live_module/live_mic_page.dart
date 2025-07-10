@@ -3,8 +3,8 @@ import 'package:flutter_application_2/commom/styles/colors.dart';
 
 class LiveMicRoomPage extends StatelessWidget {
   final String title;
-  final String imageUrl;
-  const LiveMicRoomPage({super.key, required this.title, required this.imageUrl});
+  final String coverUrl;
+  const LiveMicRoomPage({super.key, required this.title, required this.coverUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class LiveMicRoomPage extends StatelessWidget {
         title: Row(
           children: [
             CircleAvatar(
-              backgroundImage: NetworkImage(imageUrl),
+              backgroundImage: NetworkImage(coverUrl),
               radius: 16,
             ),
             const SizedBox(width: 8),
@@ -44,7 +44,7 @@ class LiveMicRoomPage extends StatelessWidget {
           // 背景模糊大图
           Positioned.fill(
             child: Image.network(
-              imageUrl,
+              coverUrl,
               fit: BoxFit.cover,
               color: AppColors.mask,
               colorBlendMode: BlendMode.darken,

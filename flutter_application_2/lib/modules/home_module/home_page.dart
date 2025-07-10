@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/modules/live_module/live_mic_page.dart';
+import 'package:flutter_application_2/modules/live_module/live_room_page.dart';
 import 'package:flutter_application_2/commom/styles/colors.dart';
-import 'dart:math';
+import 'models/home_card_info.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -26,10 +27,14 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     'Super Star',
   ];
 
+  late List<HomeCardInfo> cards;
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: tabs.length, vsync: this, initialIndex: 1);
+    // mock 数据
+    cards = HomeCardInfo.mockList(16);
   }
 
   @override
@@ -99,38 +104,47 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 crossAxisSpacing: 12,
                 childAspectRatio: 0.8,
               ),
-              itemCount: 16,
+              itemCount: cards.length,
               itemBuilder: (context, index) {
-                final random = Random();
-                final imageUrl = 'https://picsum.photos/seed/${random.nextInt(100000)}/400/300';
-                final title = index % 2 == 0 ? 'Lets Join' : 'Bring music to Live';
-                final tag = index % 2 == 0 ? 'Super Star' : 'LIVE HOUSE';
-                if (tag == 'LIVE HOUSE') {
+                final card = cards[index];
+                if (card.roomType == 'mic_room') {
                   return InkWell(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => LiveMicRoomPage(
-                            title: title,
-                            imageUrl: imageUrl,
+                            title: card.title,
+                            coverUrl: card.coverUrl,
                           ),
                         ),
                       );
                     },
                     child: LiveCard(
-                      imageUrl: imageUrl,
-                      title: title,
-                      tag: tag,
-                      viewers: 384,
+                      coverUrl: card.coverUrl,
+                      title: card.title,
+                      tag: card.tag,
+                      viewers: card.viewers,
                     ),
                   );
                 } else {
-                  return LiveCard(
-                    imageUrl: imageUrl,
-                    title: title,
-                    tag: tag,
-                    viewers: 384,
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LivePage(
+                            // 可传 title/coverUrl
+                          ),
+                        ),
+                      );
+                    },
+                    child: LiveCard(
+                      coverUrl: card.coverUrl,
+                      title: card.title,
+                      tag: card.tag,
+                      viewers: card.viewers,
+                    ),
                   );
                 }
               },
@@ -143,13 +157,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 }
 
 class LiveCard extends StatelessWidget {
-  final String imageUrl;
+  final String coverUrl;
   final String title;
   final String tag;
   final int viewers;
   const LiveCard({
     super.key,
-    required this.imageUrl,
+    required this.coverUrl,
     required this.title,
     required this.tag,
     required this.viewers,
@@ -165,7 +179,7 @@ class LiveCard extends StatelessWidget {
           // 背景图片
           Positioned.fill(
             child: Image.network(
-              imageUrl,
+              coverUrl,
               fit: BoxFit.cover,
               errorBuilder: (c, e, s) => Container(color: Theme.of(context).dividerColor),
             ),
@@ -177,7 +191,7 @@ class LiveCard extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               decoration: BoxDecoration(
-                color: tag == 'Super Star' ? AppColors.primary : AppColors.accent,
+                color: tag == 'Live Room' ? AppColors.primary : AppColors.accent,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(

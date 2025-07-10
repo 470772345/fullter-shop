@@ -8,6 +8,7 @@ import 'commom/styles/theme.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_application_2/modules/live_module/models/live_room_info.dart';
+import 'core/network/api_service.dart';
 
 void main() => runApp(
   ChangeNotifierProvider(create: (_) => ThemeProvider(), child: const MyApp()),
@@ -37,30 +38,22 @@ class LiveHomePage extends StatefulWidget {
 class _LiveHomePageState extends State<LiveHomePage> {
   int _bottomIndex = 0;
   late List<Widget> _pages;
-  final List<LiveRoomInfo> liveRooms = [
-  LiveRoomInfo(
-    id: '1',
-    title: 'Bring music to Live',
-    coverUrl: 'https://picsum.photos/seed/1/400/700',
-    anchorName: 'Jeanette King',
-    onlineCount: 129,
-    roomType: 'mic_room',
-  ),
-  LiveRoomInfo(
-    id: '2',
-    title: 'Super Star Show',
-    coverUrl: 'https://picsum.photos/seed/2/400/700',
-    anchorName: 'Bruce',
-    onlineCount: 256,
-    roomType: 'live_room',
-  ),
-  // ...更多房间
-];
+  List<LiveRoomInfo> liveRooms = [];
+
+  Future<List<LiveRoomInfo>> fetchMockLiveRooms() async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    return LiveRoomInfo.mockList(8); // 直接用 model 的 mockList
+  }
 
   @override
   void initState() {
     super.initState();
-    _pages = [HomePage(), LiveSquarePage(liveRooms: liveRooms), MicPage(), MyPage()];
+    fetchMockLiveRooms().then((rooms) {
+      setState(() {
+        liveRooms = rooms;
+        _pages = [HomePage(), LiveSquarePage(liveRooms: liveRooms), MicPage(), MyPage()];
+      });
+    });
   }
 
   @override
