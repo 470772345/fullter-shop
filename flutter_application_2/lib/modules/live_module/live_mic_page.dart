@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/commom/styles/colors.dart';
 
-class LiveDetailPage extends StatelessWidget {
+class LiveMicRoomPage extends StatelessWidget {
   final String title;
   final String imageUrl;
-  const LiveDetailPage({super.key, required this.title, required this.imageUrl});
+  const LiveMicRoomPage({super.key, required this.title, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {

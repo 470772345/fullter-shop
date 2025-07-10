@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/modules/live_module/live_detail_page.dart';
+import 'package:flutter_application_2/modules/live_module/live_mic_page.dart';
 import 'package:flutter_application_2/commom/styles/colors.dart';
 import 'dart:math';
 
@@ -111,7 +111,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LiveDetailPage(
+                          builder: (context) => LiveMicRoomPage(
                             title: title,
                             imageUrl: imageUrl,
                           ),

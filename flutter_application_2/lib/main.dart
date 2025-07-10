@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2/modules/mic_module/mic_page.dart';
 import 'package:flutter_application_2/modules/user_module/me_page.dart';
 import 'package:flutter_application_2/modules/home_module/home_page.dart';
-import 'package:flutter_application_2/modules/live_module/live_page.dart';
+import 'package:flutter_application_2/modules/live_module/live_squart_page.dart';
 
 import 'commom/styles/theme.dart';
 import 'package:provider/provider.dart';
+
+import 'package:flutter_application_2/modules/live_module/models/live_room_info.dart';
 
 void main() => runApp(
   ChangeNotifierProvider(create: (_) => ThemeProvider(), child: const MyApp()),
@@ -35,11 +37,30 @@ class LiveHomePage extends StatefulWidget {
 class _LiveHomePageState extends State<LiveHomePage> {
   int _bottomIndex = 0;
   late List<Widget> _pages;
+  final List<LiveRoomInfo> liveRooms = [
+  LiveRoomInfo(
+    id: '1',
+    title: 'Bring music to Live',
+    coverUrl: 'https://picsum.photos/seed/1/400/700',
+    anchorName: 'Jeanette King',
+    onlineCount: 129,
+    roomType: 'mic_room',
+  ),
+  LiveRoomInfo(
+    id: '2',
+    title: 'Super Star Show',
+    coverUrl: 'https://picsum.photos/seed/2/400/700',
+    anchorName: 'Bruce',
+    onlineCount: 256,
+    roomType: 'live_room',
+  ),
+  // ...更多房间
+];
 
   @override
   void initState() {
     super.initState();
-    _pages = [HomePage(), LivePage(), MicPage(), MyPage()];
+    _pages = [HomePage(), LiveSquarePage(liveRooms: liveRooms), MicPage(), MyPage()];
   }
 
   @override
@@ -56,12 +77,7 @@ class _LiveHomePageState extends State<LiveHomePage> {
               context,
             ).push(MaterialPageRoute(builder: (_) => MicPage()));
           }
-          if (i == 1) {
-            // Live tab
-            Navigator.of(
-              context,
-            ).push(MaterialPageRoute(builder: (_) => LivePage()));
-          } else {
+          else {
             setState(() => _bottomIndex = i);
           }
         },
