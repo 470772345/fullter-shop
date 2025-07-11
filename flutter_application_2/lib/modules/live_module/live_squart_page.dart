@@ -12,10 +12,19 @@ class LiveSquarePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return PageView.builder(
       scrollDirection: Axis.vertical,
       itemCount: liveRooms.length,
+      onPageChanged: (index) {
+        // 预加载下一页图片
+        if (index + 1 < liveRooms.length) {
+          precacheImage(NetworkImage(liveRooms[index + 1].coverUrl), context);
+        }
+        // 预加载前一页图片
+        if (index - 1 >= 0) {
+          precacheImage(NetworkImage(liveRooms[index - 1].coverUrl), context);
+        }
+      },
       itemBuilder: (context, index) {
         final room = liveRooms[index];
         return Stack(
