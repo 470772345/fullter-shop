@@ -5,6 +5,7 @@ class LiveRoomInfo {
   final String anchorName;
   final int onlineCount;
   final String roomType;
+  final String videoUrl;
 
   LiveRoomInfo({
     required this.id,
@@ -13,6 +14,7 @@ class LiveRoomInfo {
     required this.anchorName,
     required this.onlineCount,
     required this.roomType,
+    required this.videoUrl,
   });
 
   factory LiveRoomInfo.fromJson(Map<String, dynamic> json) => LiveRoomInfo(
@@ -22,6 +24,7 @@ class LiveRoomInfo {
         anchorName: json['anchorName'] as String,
         onlineCount: json['onlineCount'] as int,
         roomType: json['roomType'] as String,
+        videoUrl: json['videoUrl'] as String,
       );
 
   Map<String, dynamic> toJson() => {
@@ -31,6 +34,7 @@ class LiveRoomInfo {
         'anchorName': anchorName,
         'onlineCount': onlineCount,
         'roomType': roomType,
+        'videoUrl': videoUrl,
       };
 
   LiveRoomInfo copyWith({
@@ -40,6 +44,7 @@ class LiveRoomInfo {
     String? anchorName,
     int? onlineCount,
     String? roomType,
+    String? videoUrl,
   }) {
     return LiveRoomInfo(
       id: id ?? this.id,
@@ -48,6 +53,7 @@ class LiveRoomInfo {
       anchorName: anchorName ?? this.anchorName,
       onlineCount: onlineCount ?? this.onlineCount,
       roomType: roomType ?? this.roomType,
+      videoUrl: videoUrl ?? this.videoUrl,
     );
   }
 
@@ -61,7 +67,8 @@ class LiveRoomInfo {
           coverUrl == other.coverUrl &&
           anchorName == other.anchorName &&
           onlineCount == other.onlineCount &&
-          roomType == other.roomType;
+          roomType == other.roomType &&
+          videoUrl == other.videoUrl;
 
   @override
   int get hashCode =>
@@ -70,7 +77,8 @@ class LiveRoomInfo {
       coverUrl.hashCode ^
       anchorName.hashCode ^
       onlineCount.hashCode ^
-      roomType.hashCode;
+      roomType.hashCode ^
+      videoUrl.hashCode;
 
   static List<LiveRoomInfo> mockList([int count = 5]) {
     return List.generate(count, (i) => LiveRoomInfo(
@@ -80,6 +88,9 @@ class LiveRoomInfo {
       anchorName: 'Anchor ${i + 1}',
       onlineCount: 100 + i * 10,
       roomType: i % 2 == 0 ? 'mic_room' : 'live_room',
+      videoUrl: i % 2 == 0
+        ? ''
+        : 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     ));
   }
 }

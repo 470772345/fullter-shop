@@ -8,7 +8,6 @@ import 'commom/styles/theme.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_application_2/modules/live_module/models/live_room_info.dart';
-import 'core/network/api_service.dart';
 
 void main() => runApp(
   ChangeNotifierProvider(create: (_) => ThemeProvider(), child: const MyApp()),
@@ -37,8 +36,8 @@ class LiveHomePage extends StatefulWidget {
 
 class _LiveHomePageState extends State<LiveHomePage> {
   int _bottomIndex = 0;
-  late List<Widget> _pages;
-  List<LiveRoomInfo> liveRooms = [];
+  late List<LiveRoomInfo> liveRooms = [];
+  List<Widget>? _pages;
 
   Future<List<LiveRoomInfo>> fetchMockLiveRooms() async {
     await Future.delayed(const Duration(milliseconds: 500));
@@ -58,9 +57,14 @@ class _LiveHomePageState extends State<LiveHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    if (_pages == null) {
+      return Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
     return Scaffold(
       // AppBar 交由各自页面管理，这里不再处理
-      body: _pages[_bottomIndex],
+      body: _pages![_bottomIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _bottomIndex,
         onTap: (i) {

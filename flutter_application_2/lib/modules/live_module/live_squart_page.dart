@@ -12,6 +12,7 @@ class LiveSquarePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return PageView.builder(
       scrollDirection: Axis.vertical,
       itemCount: liveRooms.length,
@@ -70,7 +71,10 @@ class LiveSquarePage extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (_) => LivePage(
-                            // 你可以在 LivePage 构造函数里加 title/coverUrl 参数
+                            title: room.title,
+                            coverUrl: room.coverUrl,
+                            videoUrl: room.videoUrl,
+                            roomType: room.roomType,
                           ),
                         ),
                       );
