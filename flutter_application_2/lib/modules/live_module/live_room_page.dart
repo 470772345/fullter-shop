@@ -15,10 +15,43 @@ class LivePage extends StatefulWidget {
   State<LivePage> createState() => _LivePageState();
 }
 
+// 聊天消息数据结构
+class ChatMessage {
+  final String user;
+  final String content;
+  ChatMessage(this.user, this.content);
+}
+
 class _LivePageState extends State<LivePage> {
   final GlobalKey<FloatingHeartsState> _heartsKey = GlobalKey<FloatingHeartsState>();
   final GlobalKey _likeBtnKey = GlobalKey();
   VideoPlayerController? _controller;
+
+  // 聊天消息列表
+  final List<ChatMessage> chatMessages = [
+    ChatMessage('小明', '欢迎来到直播间！'),
+    ChatMessage('小红', '主播好帅！'),
+    ChatMessage('小刚', '送出火箭'),
+    ChatMessage('小美', '关注主播不迷路'),
+    ChatMessage('游客', '来了来了'),
+  ];
+  final ScrollController _chatScrollController = ScrollController();
+
+  void addChatMessage(ChatMessage msg) {
+    setState(() {
+      chatMessages.add(msg);
+    });
+    // 动画滚动到底部
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_chatScrollController.hasClients) {
+        _chatScrollController.animateTo(
+          _chatScrollController.position.maxScrollExtent,
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    });
+  }
 
   @override
   void initState() {
@@ -36,6 +69,7 @@ class _LivePageState extends State<LivePage> {
   @override
   void dispose() {
     _controller?.dispose();
+    _chatScrollController.dispose();
     super.dispose();
   }
 
@@ -119,11 +153,11 @@ class _LivePageState extends State<LivePage> {
                 ),
               ),
             ),
-            // 底部弹幕区
-            Positioned(
+            // 弹幕区，放在聊天消息区域上方
+             Positioned( 
               left: 0,
               right: 0,
-              bottom: 90,
+              bottom: 90 + 4 * 36 , // 聊天消息区高度+间距
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: DanmakuView(
@@ -134,12 +168,63 @@ class _LivePageState extends State<LivePage> {
                     DanmakuMessage(id: '4', userName: 'Tao', content: '来了来了'),
                     DanmakuMessage(id: '5', userName: 'Mac', content: '关注主播不迷路'),
                   ],
-                  maxLines: 3,
-                  trackSpeeds: [4.0, 6.0, 8.0], // 轨道1快，轨道2中，轨道3慢
+                  maxLines: 2, // 2个弹幕轨道
+                  trackSpeeds: [4.0, 6.0],
                 ),
               ),
             ),
-            // 底部操作栏
+            // 弹幕区
+            // 聊天消息区域，放在输入框上方
+            Positioned(
+              left: 12,
+              right: 12,
+              bottom: 90, // 输入框高度+间距
+              child: AnimatedContainer(
+                duration: Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+                constraints: BoxConstraints(
+                  maxHeight: 4 * 36.0, // 每条消息36高度，最多4条
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.45),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: ListView.builder(
+                  controller: _chatScrollController,
+                  shrinkWrap: true,
+                  itemCount: chatMessages.length,
+                  itemBuilder: (context, index) {
+                    final msg = chatMessages[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: '${msg.user}: ',
+                              style: TextStyle(
+                                color: Colors.amberAccent,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                shadows: [Shadow(color: Colors.black54, blurRadius: 2)],
+                              ),
+                            ),
+                            TextSpan(
+                              text: msg.content,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
             Positioned(
               left: 0,
               right: 0,
