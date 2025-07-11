@@ -84,6 +84,7 @@ class _LiveHomePageState extends State<LiveHomePage> {
           color: Color.fromARGB(255, 229, 226, 217),
           fontSize: 12,
         ),
+        showUnselectedLabels: true,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.live_tv), label: 'Live'),
