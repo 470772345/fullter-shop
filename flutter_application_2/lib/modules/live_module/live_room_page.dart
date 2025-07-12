@@ -7,6 +7,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter_application_2/modules/live_module/widgets/live_chat_area_widget.dart';
 import 'package:flutter_application_2/modules/live_module/models/chat_message.dart';
+import 'package:flutter_application_2/modules/live_module/widgets/live_chat_input_widget.dart';
 
 class LivePage extends StatefulWidget {
   final String? title;
@@ -307,27 +308,11 @@ class _LivePageState extends State<LivePage> {
                   child: Row(
                     children: [
                       // 输入框占位
-                      Expanded(
-                        child: Container(
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: Theme.of(
-                              context,
-                            ).dividerColor.withAlpha((0.08 * 255).toInt()),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Say hi...',
-                            style: TextStyle(
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.color
-                                  ?.withAlpha((0.5 * 255).toInt()),
-                            ),
-                          ),
+                        Expanded(
+                        child: LiveChatInput(
+                          onSend: (text) {
+                            addChatMessage(ChatMessage('我', text));
+                          },
                         ),
                       ),
                       const SizedBox(width: 8),
