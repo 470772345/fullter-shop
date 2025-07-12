@@ -30,34 +30,58 @@ class DanmakuView extends StatefulWidget {
 
 class _DanmakuViewState extends State<DanmakuView> {
   late List<List<_DanmakuTrackItem>> tracks;
+  Set<String> shownIds = {};
+  bool _initialDanmakuShown = false;
 
   @override
   void initState() {
     super.initState();
-    _assignTracks();
+    tracks = List.generate(widget.maxLines, (_) => []);
+    shownIds = {}; // 让所有初始+新消息都能飞出来
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _appendNewDanmakus(widget.messages, isInitial: true);
+      _initialDanmakuShown = true;
+    });
   }
 
   @override
   void didUpdateWidget(covariant DanmakuView oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.messages != widget.messages) {
-      _assignTracks();
+      _appendNewDanmakus(widget.messages, isInitial: !_initialDanmakuShown);
+      _initialDanmakuShown = true;
     }
   }
 
-  void _assignTracks() {
-    // 智能轨道分配：每个轨道维护下次可用时间和上一个弹幕宽度
-    tracks = List.generate(widget.maxLines, (_) => []);
-    final List<DateTime> trackAvailable = List.generate(widget.maxLines, (_) => DateTime(0));
-    final List<double> trackPrevWidth = List.generate(widget.maxLines, (_) => 0.0);
+  void _appendNewDanmakus(List<DanmakuMessage> messages, {bool isInitial = false}) {
     final now = DateTime.now();
-    final screenWidth = WidgetsBinding.instance.platformDispatcher.views.first.physicalSize.width / WidgetsBinding.instance.platformDispatcher.views.first.devicePixelRatio;
-    for (int i = 0; i < widget.messages.length; i++) {
-      // 预估弹幕宽度
-      final text = widget.messages[i].userName + ': ' + widget.messages[i].content;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final List<DateTime> trackAvailable = List.generate(widget.maxLines, (_) => now);
+    final List<double> trackPrevWidth = List.generate(widget.maxLines, (_) => 0.0);
+
+    // 统计每个轨道最后一条弹幕的结束时间和宽度
+    for (int t = 0; t < widget.maxLines; t++) {
+      if (tracks[t].isNotEmpty) {
+        final last = tracks[t].last;
+        trackAvailable[t] = last.expectedEndTime;
+        final text = last.message.userName + ': ' + last.message.content;
+        final style = const TextStyle(fontWeight: FontWeight.bold, fontSize: 14);
+        trackPrevWidth[t] = _estimateDanmakuWidth(text, style);
+      }
+    }
+
+    int initialDelayBase = 0;
+    const int initialDelayStep = 300; // 每条初始弹幕多300ms
+
+    for (int i = 0; i < messages.length; i++) {
+      final msg = messages[i];
+      if (shownIds.contains(msg.id)) continue;
+      shownIds.add(msg.id);
+
+      final text = msg.userName + ': ' + msg.content;
       final style = const TextStyle(fontWeight: FontWeight.bold, fontSize: 14);
       final width = _estimateDanmakuWidth(text, style);
-      // 找到最早可用的轨道
+
       int bestTrack = 0;
       DateTime bestTime = trackAvailable[0];
       for (int t = 1; t < widget.maxLines; t++) {
@@ -66,26 +90,31 @@ class _DanmakuViewState extends State<DanmakuView> {
           bestTime = trackAvailable[t];
         }
       }
-      // 轨道速度
       final speed = widget.trackSpeeds != null && widget.trackSpeeds!.length > bestTrack
           ? widget.trackSpeeds![bestTrack]
           : widget.speed;
-      // 计算 delay，确保前一条弹幕尾部离开屏幕
       final prevWidth = trackPrevWidth[bestTrack];
       final speedPxPerMs = (screenWidth + width) / (speed * 1000);
-      final safeGap = 24.0; // px
-      final timeToSafe = ((prevWidth + safeGap) / speedPxPerMs).ceil(); // ms
+      final safeGap = 24.0;
+      final timeToSafe = ((prevWidth + safeGap) / speedPxPerMs).ceil();
       final delayMs = bestTime.isAfter(now) ? bestTime.difference(now).inMilliseconds : 0;
-      final totalDelay = delayMs + timeToSafe;
+      int totalDelay = delayMs + timeToSafe;
+      if (isInitial) {
+        totalDelay += initialDelayBase;
+        initialDelayBase += initialDelayStep;
+      }
+
+      final expectedEndTime = now.add(Duration(milliseconds: totalDelay + (speed * 1000).toInt()));
       tracks[bestTrack].add(_DanmakuTrackItem(
-        message: widget.messages[i],
+        message: msg,
         delay: Duration(milliseconds: totalDelay),
         duration: Duration(milliseconds: (speed * 1000).toInt()),
+        expectedEndTime: expectedEndTime,
       ));
-      // 更新轨道下次可用时间和宽度
-      trackAvailable[bestTrack] = now.add(Duration(milliseconds: totalDelay));
+      trackAvailable[bestTrack] = expectedEndTime;
       trackPrevWidth[bestTrack] = width;
     }
+    setState(() {});
   }
 
   double _estimateDanmakuWidth(String text, TextStyle style) {
@@ -110,7 +139,7 @@ class _DanmakuViewState extends State<DanmakuView> {
               children: List.generate(track.length, (msgIndex) {
                 final item = track[msgIndex];
                 return _AnimatedDanmakuItem(
-                  key: ValueKey(item.message.id),
+                  key: UniqueKey(),
                   message: item.message,
                   duration: item.duration,
                   delay: item.delay,
@@ -128,7 +157,13 @@ class _DanmakuTrackItem {
   final DanmakuMessage message;
   final Duration delay;
   final Duration duration;
-  _DanmakuTrackItem({required this.message, required this.delay, required this.duration});
+  final DateTime expectedEndTime;
+  _DanmakuTrackItem({
+    required this.message,
+    required this.delay,
+    required this.duration,
+    required this.expectedEndTime,
+  });
 }
 
 class _AnimatedDanmakuItem extends StatefulWidget {

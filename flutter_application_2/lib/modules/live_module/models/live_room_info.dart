@@ -90,7 +90,7 @@ class LiveRoomInfo {
       roomType: i % 2 == 0 ? 'mic_room' : 'live_room',
       videoUrl: i % 2 == 0
         ? ''
-        : 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+        : 'https://www.w3school.com.cn/i/movie.mp4',
     ));
   }
 }
