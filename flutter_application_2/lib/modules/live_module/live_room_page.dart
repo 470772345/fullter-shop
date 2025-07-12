@@ -5,6 +5,8 @@ import 'package:flutter_application_2/modules/live_module/widgets/floarting_hear
 import 'package:video_player/video_player.dart';
 import 'dart:async';
 import 'dart:math';
+import 'package:flutter_application_2/modules/live_module/widgets/live_chat_area_widget.dart';
+import 'package:flutter_application_2/modules/live_module/models/chat_message.dart';
 
 class LivePage extends StatefulWidget {
   final String? title;
@@ -23,13 +25,6 @@ class LivePage extends StatefulWidget {
   State<LivePage> createState() => _LivePageState();
 }
 
-// 聊天消息数据结构
-class ChatMessage {
-  final String user;
-  final String content;
-  ChatMessage(this.user, this.content);
-}
-
 class _LivePageState extends State<LivePage> {
   final GlobalKey<FloatingHeartsState> _heartsKey =
       GlobalKey<FloatingHeartsState>();
@@ -37,13 +32,7 @@ class _LivePageState extends State<LivePage> {
   VideoPlayerController? _controller;
 
   // 聊天消息列表
-  final List<ChatMessage> chatMessages = [
-    ChatMessage('小明', '欢迎来到直播间！'),
-    ChatMessage('小红', '主播好帅！'),
-    ChatMessage('小刚', '送出火箭'),
-    ChatMessage('小美', '关注主播不迷路'),
-    ChatMessage('游客', '来了来了'),
-  ];
+  final List<ChatMessage> chatMessages = ChatMessage.mockList(15);
   final ScrollController _chatScrollController = ScrollController();
 
   // 弹幕消息列表
@@ -296,52 +285,9 @@ class _LivePageState extends State<LivePage> {
               left: 12,
               right: 12,
               bottom: 90, // 输入框高度+间距
-              child: AnimatedContainer(
-                duration: Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-                constraints: BoxConstraints(
-                  maxHeight: 4 * 36.0, // 每条消息36高度，最多4条
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.45),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: ListView.builder(
-                  controller: _chatScrollController,
-                  shrinkWrap: true,
-                  itemCount: chatMessages.length,
-                  itemBuilder: (context, index) {
-                    final msg = chatMessages[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 2),
-                      child: RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: '${msg.user}: ',
-                              style: TextStyle(
-                                color: Colors.amberAccent,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                                shadows: [
-                                  Shadow(color: Colors.black54, blurRadius: 2),
-                                ],
-                              ),
-                            ),
-                            TextSpan(
-                              text: msg.content,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
+              child: LiveChatArea(
+                messages: chatMessages,
+                controller: _chatScrollController,
               ),
             ),
             Positioned(
