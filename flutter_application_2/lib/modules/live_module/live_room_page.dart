@@ -8,6 +8,8 @@ import 'dart:math';
 import 'package:flutter_application_2/modules/live_module/widgets/live_chat_area_widget.dart';
 import 'package:flutter_application_2/modules/live_module/models/chat_message.dart';
 import 'package:flutter_application_2/modules/live_module/widgets/live_chat_input_widget.dart';
+import 'package:flutter_application_2/modules/live_module/widgets/gift_panel_widget.dart';
+import 'package:flutter_application_2/modules/live_module/models/gift_item.dart';
 
 class LivePage extends StatefulWidget {
   final String? title;
@@ -308,7 +310,7 @@ class _LivePageState extends State<LivePage> {
                   child: Row(
                     children: [
                       // 输入框占位
-                        Expanded(
+                      Expanded(
                         child: LiveChatInput(
                           onSend: (text) {
                             addChatMessage(ChatMessage('我', text));
@@ -321,7 +323,21 @@ class _LivePageState extends State<LivePage> {
                           Icons.card_giftcard,
                           color: Theme.of(context).colorScheme.primary,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            builder: (_) => GiftPanel(
+                              gifts: GiftItem.mockList(),
+                              onSend: (gift) {
+                                // 这里处理赠送逻辑
+                                Navigator.pop(context);
+                                // 可弹toast/动画
+                              },
+                            ),
+                          );
+                        },
                       ),
                       IconButton(
                         icon: Icon(
