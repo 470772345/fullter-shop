@@ -10,6 +10,7 @@ import 'package:flutter_application_2/modules/live_module/models/chat_message.da
 import 'package:flutter_application_2/modules/live_module/widgets/live_chat_input_widget.dart';
 import 'package:flutter_application_2/modules/live_module/widgets/gift_panel_widget.dart';
 import 'package:flutter_application_2/modules/live_module/models/gift_item.dart';
+import 'package:lottie/lottie.dart';
 
 class LivePage extends StatefulWidget {
   final String? title;
@@ -137,6 +138,37 @@ class _LivePageState extends State<LivePage> {
     _chatScrollController.dispose();
     _danmakuTimer?.cancel();
     super.dispose();
+  }
+
+  // Lottie 礼物动画
+  void showGiftAnimation(GiftItem gift) {
+    String lottieAsset;
+    if (gift.name == '鱼跃') {
+      lottieAsset = 'lottie/fish.json';
+    } else if (gift.name == '飞天娃') {
+      lottieAsset = 'lottie/flying_man.json';
+    } else {
+      // 默认动画或直接 return
+      return;
+    }
+    final overlay = Overlay.of(context);
+    late OverlayEntry entry;
+    entry = OverlayEntry(
+      builder: (context) => Center(
+        child: Lottie.asset(
+          lottieAsset,
+          width: 200,
+          height: 200,
+          repeat: false,
+          onLoaded: (composition) {
+            Future.delayed(composition.duration, () {
+              entry.remove();
+            });
+          },
+        ),
+      ),
+    );
+    overlay.insert(entry);
   }
 
   @override
@@ -331,9 +363,9 @@ class _LivePageState extends State<LivePage> {
                             builder: (_) => GiftPanel(
                               gifts: GiftItem.mockList(),
                               onSend: (gift) {
-                                // 这里处理赠送逻辑
-                                Navigator.pop(context);
-                                // 可弹toast/动画
+                                Navigator.pop(context); // 关闭面板
+                                showGiftAnimation(gift);    // 根据礼物名播放动画
+                                // 可弹toast/动画等其他赠送逻辑
                               },
                             ),
                           );

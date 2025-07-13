@@ -30,10 +30,10 @@ class GiftItem {
   };
 
   static List<GiftItem> mockList() => [
-    GiftItem(id: '1', name: '心动', imageUrl: 'assets/images/gift_001.png', price: 1),
-    GiftItem(id: '2', name: '人气票', imageUrl: 'assets/images/gift_002.png', price: 1, tag: '人气榜'),
-    GiftItem(id: '3', name: '天鹅之梦', imageUrl: 'assets/images/gift_001.png', price: 50, tag: '新主播'),
-    GiftItem(id: '4', name: '倒杯星星茶', imageUrl: 'assets/images/gift_001.png', price: 299, tag: '奇遇'),
+    GiftItem(id: '1', name: '鱼跃', imageUrl: 'images/gift_001.png', price: 1),
+    GiftItem(id: '2', name: '飞天娃', imageUrl: 'images/gift_002.png', price: 1, tag: '人气榜'),
+    GiftItem(id: '3', name: '鱼跃', imageUrl: 'images/gift_001.png', price: 50, tag: '新主播'),
+    GiftItem(id: '4', name: '飞天娃', imageUrl: 'images/gift_001.png', price: 299, tag: '奇遇'),
     // ... 其它礼物
   ];
 }
