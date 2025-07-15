@@ -17,12 +17,14 @@ class LivePage extends StatefulWidget {
   final String? coverUrl;
   final String? videoUrl;
   final String? roomType;
+  final VideoPlayerController? controller;
   const LivePage({
     super.key,
     this.title,
     this.coverUrl,
     this.videoUrl,
     this.roomType,
+    this.controller,
   });
 
   @override
@@ -111,17 +113,20 @@ class _LivePageState extends State<LivePage> {
   void initState() {
     super.initState();
     if (widget.roomType != 'mic_room') {
-      _controller =
-          VideoPlayerController.networkUrl(
-              Uri.parse(
-                widget.videoUrl ??
-                    'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-              ),
-            )
-            ..initialize().then((_) {
-              setState(() {});
-              _controller?.play();
-            });
+      if (widget.controller != null) {
+        _controller = widget.controller;
+      } else {
+        _controller = VideoPlayerController.networkUrl(
+          Uri.parse(
+            widget.videoUrl ??
+                'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+          ),
+        )
+        ..initialize().then((_) {
+          setState(() {});
+          _controller?.play();
+        });
+      }
     }
     // 自动弹幕流
     _danmakuTimer = Timer.periodic(Duration(seconds: 20), (_) {
@@ -134,7 +139,9 @@ class _LivePageState extends State<LivePage> {
 
   @override
   void dispose() {
-    _controller?.dispose();
+    if (widget.controller == null) {
+      _controller?.dispose();
+    }
     _chatScrollController.dispose();
     _danmakuTimer?.cancel();
     super.dispose();
